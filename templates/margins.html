@@ -45,11 +45,11 @@
 <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
   <!-- Type Filter -->
   <div style="display: flex; gap: 8px; align-items: center;">
-    <a href="{{ url_for('margins', search=search) }}"
+    <a href="{{ url_for('margins', search=search, sort=sort_by, dir=sort_dir) }}"
        class="btn {{ 'btn-primary' if type_filter == 'all' else 'btn-secondary' }}"
        style="font-size: 0.75rem; padding: 6px 12px;">All</a>
     {% for t in types %}
-    <a href="{{ url_for('margins', type=t, search=search) }}"
+    <a href="{{ url_for('margins', type=t, search=search, sort=sort_by, dir=sort_dir) }}"
        class="btn {{ 'btn-primary' if type_filter == t else 'btn-secondary' }}"
        style="font-size: 0.75rem; padding: 6px 12px;">{{ t }}</a>
     {% endfor %}
@@ -60,10 +60,12 @@
   <!-- Search -->
   <form method="GET" action="{{ url_for('margins') }}" style="display: flex; gap: 6px;">
     <input type="hidden" name="type" value="{{ type_filter }}">
+    {% if sort_by %}<input type="hidden" name="sort" value="{{ sort_by }}">{% endif %}
+    {% if sort_by %}<input type="hidden" name="dir" value="{{ sort_dir }}">{% endif %}
     <input type="text" name="search" value="{{ search }}" placeholder="Search symbol..."
            class="form-input" style="width: 160px; padding: 6px 10px; font-size: 0.8rem;">
     {% if search %}
-    <a href="{{ url_for('margins', type=type_filter) }}" class="btn btn-secondary"
+    <a href="{{ url_for('margins', type=type_filter, sort=sort_by, dir=sort_dir) }}" class="btn btn-secondary"
        style="font-size: 0.75rem; padding: 6px 10px;">✕</a>
     {% endif %}
   </form>
@@ -76,17 +78,25 @@
   <table class="data-table">
     <thead>
       <tr>
+        {% set base = '?type=' ~ type_filter ~ ('&search=' ~ search if search else '') %}
         <th></th>
-        <th data-sort="string">Symbol</th>
-        <th data-sort="string">Type</th>
-        <th data-sort="number">Bid</th>
-        <th data-sort="number">Ask</th>
-        <th data-sort="number">Spread (pts)</th>
-        <th data-sort="number">Contract Size</th>
-        <th data-sort="number">Min Lot</th>
-        <th data-sort="currency">Margin ({{ instruments[0].AccountCurrency if instruments else 'AUD' }})</th>
-        <th data-sort="string">Margin CCY</th>
-        <th data-sort="currency">Tick Value</th>
+        {% for col_name, col_key, align in [
+          ('Symbol', 'Symbol', ''),
+          ('Type', 'Type', ''),
+          ('Bid', 'Bid', ''),
+          ('Ask', 'Ask', ''),
+          ('Spread (pts)', 'Spread', ''),
+          ('Contract Size', 'ContractSize', 'right'),
+          ('Min Lot', 'MinLot', 'center'),
+          ('Margin (' ~ (instruments[0].AccountCurrency if instruments else 'AUD') ~ ')', 'Margin', 'right'),
+          ('Margin CCY', 'MarginCCY', 'center'),
+          ('Tick Value', 'TickValue', 'right'),
+        ] %}
+        {% set next_dir = 'asc' if (sort_by == col_key and sort_dir == 'desc') else 'desc' %}
+        <th class="{{ align }} sortable {{ 'sort-asc' if sort_by == col_key and sort_dir == 'asc' else ('sort-desc' if sort_by == col_key and sort_dir == 'desc' else '') }}">
+          <a href="{{ base }}&sort={{ col_key }}&dir={{ next_dir }}" style="color: inherit; text-decoration: none; display: block;">{{ col_name }}</a>
+        </th>
+        {% endfor %}
       </tr>
     </thead>
     <tbody>
@@ -133,7 +143,7 @@
     </tbody>
   </table>
 </div>
-{{ render_pagination(pagination, extra_params='&type=' ~ type_filter ~ ('&search=' ~ search if search else '')) }}
+{{ render_pagination(pagination, extra_params='&type=' ~ type_filter ~ ('&search=' ~ search if search else '') ~ ('&sort=' ~ sort_by ~ '&dir=' ~ sort_dir if sort_by else '')) }}
 {% else %}
 <div class="empty-state">
   <p>No margin data imported yet.</p>

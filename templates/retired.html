@@ -13,17 +13,32 @@
   <table class="data-table">
     <thead>
       <tr>
+        {% set base = '?' %}
         <th>#</th>
-        <th data-sort="string">Strategy</th>
+        {% for col_name, col_key, align in [
+          ('Strategy', 'Strategy', ''),
+        ] %}
+        {% set next_dir = 'asc' if (sort_by == col_key and sort_dir == 'desc') else 'desc' %}
+        <th class="{{ align }} sortable {{ 'sort-asc' if sort_by == col_key and sort_dir == 'asc' else ('sort-desc' if sort_by == col_key and sort_dir == 'desc' else '') }}">
+          <a href="{{ base }}sort={{ col_key }}&dir={{ next_dir }}" style="color: inherit; text-decoration: none; display: block;">{{ col_name }}</a>
+        </th>
+        {% endfor %}
         <th>Style</th>
         <th>Risk Management</th>
-        <th data-sort="string">Account</th>
-        <th data-sort="date">Start Date</th>
-        <th class="right" data-sort="currency">Final P&L</th>
-        <th class="right" data-sort="number">Trades</th>
-        <th class="right" data-sort="percent">Win%</th>
-        <th class="right" data-sort="number">PF</th>
-        <th data-sort="string">Reason</th>
+        {% for col_name, col_key, align in [
+          ('Account', 'Account', ''),
+          ('Start Date', 'StartDate', ''),
+          ('Final P&L', 'FinalPL', 'right'),
+          ('Trades', 'Trades', 'right'),
+          ('Win%', 'WinPct', 'right'),
+          ('PF', 'PF', 'right'),
+          ('Reason', 'Reason', ''),
+        ] %}
+        {% set next_dir = 'asc' if (sort_by == col_key and sort_dir == 'desc') else 'desc' %}
+        <th class="{{ align }} sortable {{ 'sort-asc' if sort_by == col_key and sort_dir == 'asc' else ('sort-desc' if sort_by == col_key and sort_dir == 'desc' else '') }}">
+          <a href="{{ base }}sort={{ col_key }}&dir={{ next_dir }}" style="color: inherit; text-decoration: none; display: block;">{{ col_name }}</a>
+        </th>
+        {% endfor %}
         <th class="center">Actions</th>
       </tr>
     </thead>
@@ -118,7 +133,7 @@
     </tbody>
   </table>
 </div>
-{{ render_pagination(pagination) }}
+{{ render_pagination(pagination, '&sort=' ~ sort_by ~ '&dir=' ~ sort_dir) }}
 {% else %}
     <div class="hint">Strategies you retire will appear here</div>
   </div>

@@ -18,17 +18,17 @@
 {% if market_types %}
 {% set all_markets = ['Commodity', 'Crypto', 'Forex', 'Index'] %}
 <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
-  <a href="{{ url_for('trades', symbol='all') }}"
+  <a href="{{ url_for('trades', symbol='all', sort=sort_by, dir=sort_dir) }}"
      class="btn {{ 'btn-primary' if market_filter == 'all' else 'btn-secondary' }}"
      style="font-size: 0.75rem; padding: 6px 12px;">All</a>
   {% for m in all_markets %}
-  <a href="{{ url_for('trades', market=m, symbol='all') }}"
+  <a href="{{ url_for('trades', market=m, symbol='all', sort=sort_by, dir=sort_dir) }}"
      class="btn {{ 'btn-primary' if market_filter == m else 'btn-secondary' }}"
      style="font-size: 0.75rem; padding: 6px 12px;">{{ m }}</a>
   {% endfor %}
 
   <select id="symbolFilter" class="filter-select" style="min-width: 150px; margin-left: 8px;"
-          onchange="window.location.href='/trades?market={{ market_filter }}&symbol=' + this.value">
+          onchange="window.location.href='/trades?market={{ market_filter }}&symbol=' + this.value + '&sort={{ sort_by }}&dir={{ sort_dir }}'">
     <option value="all" {{ 'selected' if symbol_filter == 'all' }}>All Symbols</option>
     {% for sym in symbols %}
     <option value="{{ sym }}" {{ 'selected' if symbol_filter == sym }}>{{ sym }}</option>
@@ -46,15 +46,13 @@
   <table class="data-table">
     <thead>
       <tr>
-        <th data-sort="number">Ticket</th>
-        <th data-sort="string">Strategy</th>
-        <th data-sort="string">Symbol</th>
-        <th data-sort="string">Type</th>
-        <th class="right" data-sort="number">Lots</th>
-        <th data-sort="date">Open Time</th>
-        <th data-sort="date">Close Time</th>
-        <th class="right" data-sort="currency">Profit</th>
-        <th class="right" data-sort="currency">Net Profit</th>
+        {% set base = '?market=' ~ market_filter ~ '&symbol=' ~ symbol_filter %}
+        {% for col_name, col_key in [('Ticket', 'Ticket'), ('Strategy', 'Strategy'), ('Symbol', 'Symbol'), ('Type', 'Type'), ('Lots', 'Lots'), ('Open Time', 'OpenTime'), ('Close Time', 'CloseTime'), ('Profit', 'Profit'), ('Net Profit', 'NetProfit')] %}
+        {% set next_dir = 'asc' if (sort_by == col_key and sort_dir == 'desc') else 'desc' %}
+        <th class="{{ 'right' if col_key in ['Lots', 'Profit', 'NetProfit'] else '' }} sortable {{ 'sort-asc' if sort_by == col_key and sort_dir == 'asc' else ('sort-desc' if sort_by == col_key and sort_dir == 'desc' else '') }}">
+          <a href="{{ base }}&sort={{ col_key }}&dir={{ next_dir }}" style="color: inherit; text-decoration: none; display: block;">{{ col_name }}</a>
+        </th>
+        {% endfor %}
       </tr>
     </thead>
     <tbody>
@@ -78,7 +76,7 @@
     </tbody>
   </table>
 </div>
-{{ render_pagination(pagination, '&market=' ~ market_filter ~ '&symbol=' ~ symbol_filter) }}
+{{ render_pagination(pagination, '&market=' ~ market_filter ~ '&symbol=' ~ symbol_filter ~ '&sort=' ~ sort_by ~ '&dir=' ~ sort_dir) }}
 {% else %}
 <div class="data-table-wrapper">
   <div class="empty-state">

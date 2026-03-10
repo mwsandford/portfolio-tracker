@@ -245,3 +245,9 @@ jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endblock'.
 2026-03-10 16:26:48 [INFO] Portfolio Tracker starting on http://0.0.0.0:5000
 2026-03-10 16:26:48 [INFO] Directory: E:\Trading\Portfolio_Tracker
 2026-03-10 16:26:48 [INFO] Serving on http://0.0.0.0:5000
+2026-03-10 17:04:44 [INFO] Portfolio Tracker starting on http://0.0.0.0:5000
+2026-03-10 17:04:44 [INFO] Directory: E:\Trading\Portfolio_Tracker
+2026-03-10 17:04:44 [INFO] Serving on http://0.0.0.0:5000
+2026-03-10 17:12:21 [INFO] Portfolio Tracker starting on http://0.0.0.0:5000
+2026-03-10 17:12:21 [INFO] Directory: E:\Trading\Portfolio_Tracker
+2026-03-10 17:12:21 [INFO] Serving on http://0.0.0.0:5000

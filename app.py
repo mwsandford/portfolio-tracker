@@ -630,6 +630,26 @@ def strategies():
 
     market_filter = request.args.get('market', 'all')
     symbol_filter = request.args.get('symbol', 'all')
+    sort_by = request.args.get('sort', 'CreatedAt')
+    sort_dir = request.args.get('dir', 'desc')
+    if sort_dir not in ('asc', 'desc'):
+        sort_dir = 'desc'
+
+    # Whitelist sortable columns
+    sort_columns = {
+        'Strategy': Strategy.StrategyName,
+        'Account': Account.AccountName,
+        'Market': Strategy.Market,
+        'StartDate': Strategy.StartDate,
+        'Complexity': Strategy.Complexity,
+        'NetPL': Strategy.LiveNetProfit,
+        'Trades': Strategy.LiveTotalTrades,
+        'WinPct': Strategy.LiveWinRate,
+        'PF': Strategy.LiveProfitFactor,
+        'RetDD': Strategy.LiveRetDD,
+        'Sharpe': Strategy.LiveSharpe,
+        'CreatedAt': Strategy.CreatedAt,
+    }
 
     query = Strategy.query.filter_by(Status='Running')
     if account_filter != 'all':
@@ -644,7 +664,12 @@ def strategies():
     if symbol_filter != 'all':
         query = query.filter(Strategy.Symbol == symbol_filter)
 
-    all_strategies = query.order_by(Strategy.CreatedAt.desc())
+    # Apply sort — join Account if sorting by account name
+    sort_col = sort_columns.get(sort_by, Strategy.CreatedAt)
+    if sort_by == 'Account':
+        query = query.outerjoin(Account)
+    order = sort_col.asc() if sort_dir == 'asc' else sort_col.desc()
+    all_strategies = query.order_by(order)
     strategies, pagination = paginate_query(all_strategies)
     all_accounts = Account.query.order_by(Account.AccountName).all()
 
@@ -694,6 +719,8 @@ def strategies():
         symbol_filter=symbol_filter,
         symbols=symbols,
         filtered_net_profit=filtered_net_profit,
+        sort_by=sort_by,
+        sort_dir=sort_dir,
     )
 
 
@@ -807,7 +834,31 @@ def delete_note(note_id):
 @app.route('/retired')
 def retired():
     """List all retired strategies."""
-    query = Strategy.query.filter_by(Status='Retired').order_by(Strategy.UpdatedAt.desc())
+    sort_by = request.args.get('sort', 'UpdatedAt')
+    sort_dir = request.args.get('dir', 'desc')
+    if sort_dir not in ('asc', 'desc'):
+        sort_dir = 'desc'
+
+    sort_columns = {
+        'Strategy': Strategy.StrategyName,
+        'Account': Account.AccountName,
+        'StartDate': Strategy.StartDate,
+        'FinalPL': Strategy.LiveNetProfit,
+        'Trades': Strategy.LiveTotalTrades,
+        'WinPct': Strategy.LiveWinRate,
+        'PF': Strategy.LiveProfitFactor,
+        'Reason': Strategy.RetiredReason,
+        'UpdatedAt': Strategy.UpdatedAt,
+    }
+
+    query = Strategy.query.filter_by(Status='Retired')
+
+    sort_col = sort_columns.get(sort_by, Strategy.UpdatedAt)
+    if sort_by == 'Account':
+        query = query.outerjoin(Account)
+    order = sort_col.asc() if sort_dir == 'asc' else sort_col.desc()
+    query = query.order_by(order)
+
     strategies, pagination = paginate_query(query)
     all_accounts = Account.query.order_by(Account.AccountName).all()
 
@@ -815,6 +866,8 @@ def retired():
         strategies=strategies,
         accounts=all_accounts,
         pagination=pagination,
+        sort_by=sort_by,
+        sort_dir=sort_dir,
     )
 
 
@@ -1466,6 +1519,23 @@ def trades():
     """List all trades, optionally filtered by market and symbol."""
     market_filter = request.args.get('market', 'all')
     symbol_filter = request.args.get('symbol', 'all')
+    sort_by = request.args.get('sort', 'CloseTime')
+    sort_dir = request.args.get('dir', 'desc')
+    if sort_dir not in ('asc', 'desc'):
+        sort_dir = 'desc'
+
+    # Whitelist sortable columns
+    sort_columns = {
+        'Ticket': Trade.Ticket,
+        'Strategy': Strategy.StrategyName,
+        'Symbol': Trade.Symbol,
+        'Type': Trade.Type,
+        'Lots': Trade.Lots,
+        'OpenTime': Trade.OpenTime,
+        'CloseTime': Trade.CloseTime,
+        'Profit': Trade.Profit,
+        'NetProfit': Trade.NetProfit,
+    }
 
     query = Trade.query
 
@@ -1475,7 +1545,12 @@ def trades():
     if symbol_filter != 'all':
         query = query.filter(Trade.Symbol == symbol_filter)
 
-    query = query.order_by(Trade.CloseTime.desc())
+    # Apply sort — join Strategy if sorting by strategy name and not already joined
+    sort_col = sort_columns.get(sort_by, Trade.CloseTime)
+    if sort_by == 'Strategy' and market_filter == 'all':
+        query = query.join(Strategy)
+    order = sort_col.asc() if sort_dir == 'asc' else sort_col.desc()
+    query = query.order_by(order)
     all_trades, pagination = paginate_query(query)
     all_accounts = Account.query.order_by(Account.AccountName).all()
 
@@ -1507,6 +1582,8 @@ def trades():
         symbol_filter=symbol_filter,
         symbols=symbols,
         filtered_net_profit=filtered_net_profit,
+        sort_by=sort_by,
+        sort_dir=sort_dir,
     )
 
 
@@ -1883,6 +1960,23 @@ def margins():
     """Margins page — show margin requirements for all instruments."""
     type_filter = request.args.get('type', 'all')
     search = request.args.get('search', '').strip()
+    sort_by = request.args.get('sort', '')
+    sort_dir = request.args.get('dir', 'asc')
+    if sort_dir not in ('asc', 'desc'):
+        sort_dir = 'asc'
+
+    sort_columns = {
+        'Symbol': MarginData.SymbolClean,
+        'Type': MarginData.Type,
+        'Bid': MarginData.Bid,
+        'Ask': MarginData.Ask,
+        'Spread': MarginData.SpreadPoints,
+        'ContractSize': MarginData.ContractSize,
+        'MinLot': MarginData.MinLot,
+        'Margin': MarginData.MarginRequired,
+        'MarginCCY': MarginData.MarginCurrency,
+        'TickValue': MarginData.TickValue,
+    }
 
     query = MarginData.query
 
@@ -1897,7 +1991,12 @@ def margins():
             )
         )
 
-    query = query.order_by(MarginData.Type, MarginData.SymbolClean)
+    if sort_by in sort_columns:
+        sort_col = sort_columns[sort_by]
+        order = sort_col.asc() if sort_dir == 'asc' else sort_col.desc()
+        query = query.order_by(order)
+    else:
+        query = query.order_by(MarginData.Type, MarginData.SymbolClean)
 
     # Get types for filter dropdown (from full unfiltered dataset)
     all_types = db.session.query(MarginData.Type).distinct().order_by(MarginData.Type).all()
@@ -1933,6 +2032,8 @@ def margins():
         active_symbols=active_symbols,
         total_active_margin=total_active_margin,
         pagination=pagination,
+        sort_by=sort_by,
+        sort_dir=sort_dir,
     )
 
 
