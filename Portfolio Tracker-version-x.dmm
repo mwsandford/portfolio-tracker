@@ -1,0 +1,5048 @@
+{
+	"tables": {
+		"0aba6f35-3fdf-4a86-93ce-bfa4b98b782d": {
+			"lines": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"id": "0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+			"name": "Trades",
+			"desc": "",
+			"cols": [
+				{
+					"id": "d370e92a-643b-4544-96bf-6ac915032931",
+					"name": "TradeID",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": true
+					}
+				},
+				{
+					"id": "0e8b99f0-a9a4-427d-8db6-214d5fc728e7",
+					"name": "Ticket",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "15355e96-6adc-4864-9138-9a31f18b3cc3",
+					"name": "StrategyID",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": true,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "fd943b9e-61b7-4c91-b887-c53ce55e114b",
+					"name": "Symbol",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "acbda764-58b3-4f35-a299-578d736e8f5f",
+					"name": "Type",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "18bcf51e-c7e8-45bb-9978-eab1c4770dcf",
+					"name": "Lots",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "0b37dbd4-bf8d-4922-8e92-26b32551c3ca",
+					"name": "OpenPrice",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "b9f8fa1d-b464-4304-8795-1db22b406b16",
+					"name": "ClosePrice",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "726bb5d2-83ca-4d83-a8f8-db90f22aa5bb",
+					"name": "OpenTime",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "c05b5361-de7b-40e8-b435-3abbbe12c886",
+					"name": "CloseTime",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "55532985-f2da-49ee-95bc-2f9d8a27ba5a",
+					"name": "Profit",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "11c93c28-f150-4417-8572-f3b99af55aea",
+					"name": "Swap",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "9f5a2c97-258e-4373-9c60-a9c91bf50dcf",
+					"name": "Commission",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "6cd31173-16dc-497a-a247-ffb2eacc3b06",
+					"name": "NetProfit",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "23158201-f351-4384-9ba5-bdb52c2a1eb7",
+					"name": "TP",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "3aea20ad-3deb-4985-af87-1cc2de8acc16",
+					"name": "SL",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "18ae3066-cc71-451f-8b3e-73ff9e1b0712",
+					"name": "Pips",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "2a63fc44-4153-443d-a912-7d3da512ed51",
+					"name": "MagicNumber",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "12c597ac-0961-4a15-9974-ce3eca23cd49",
+					"name": "Comment",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "83e7ab9c-d3b9-48ea-828d-ef324b1932fa",
+					"name": "BalanceAfter",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "76113ed6-57db-4158-87d1-432af35ee636",
+					"name": "ImportedAt",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				}
+			],
+			"relations": [
+				"8e69e662-bf0a-459e-b8e4-c77896d8cbcf"
+			],
+			"keys": [
+				{
+					"id": "3e205e6b-bcc2-4f34-9b06-cdc400bfa794",
+					"isPk": true,
+					"name": "Primary key",
+					"cols": [
+						{
+							"id": "4b53523a-6f79-4c9e-8793-016c3e75c0b7",
+							"colid": "d370e92a-643b-4544-96bf-6ac915032931"
+						}
+					]
+				},
+				{
+					"id": "84ea3fcd-07fc-403e-a0c1-4f29d5a0b194",
+					"isPk": false,
+					"name": "Trades_key_1",
+					"cols": [
+						{
+							"id": "ed262b1e-0f4c-43d8-8770-07b832750fb0",
+							"colid": "0e8b99f0-a9a4-427d-8db6-214d5fc728e7"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "48e994b1-ba09-4dbe-bf0c-593425e82b8c",
+					"unique": false,
+					"name": "idx_trades_closetime",
+					"cols": [],
+					"sqlite": {
+						"expression": "",
+						"desc": ""
+					}
+				},
+				{
+					"id": "85f256a9-a668-4e0b-9e76-7d5d1530995e",
+					"unique": false,
+					"name": "idx_trades_comment",
+					"cols": [],
+					"sqlite": {
+						"expression": "",
+						"desc": ""
+					}
+				},
+				{
+					"id": "e1ceb8d4-e4cc-4917-a210-77950809bba6",
+					"unique": false,
+					"name": "idx_trades_strategy",
+					"cols": [],
+					"sqlite": {
+						"expression": "",
+						"desc": ""
+					}
+				}
+			],
+			"estimatedSize": "",
+			"sqlite": {
+				"withoutrowid": false,
+				"strict": false
+			},
+			"visible": true,
+			"customCode": ""
+		},
+		"55017dfa-dd9c-4f4c-b26a-b3eac4f76580": {
+			"lines": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"id": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+			"name": "Accounts",
+			"desc": "",
+			"cols": [
+				{
+					"id": "3edce3cc-45fd-4836-9a26-0d135e33642a",
+					"name": "AccountID",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": true
+					}
+				},
+				{
+					"id": "80d845ac-cee1-4243-a4a9-297769421821",
+					"name": "AccountLogin",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "9745fba9-7168-47c2-a3c2-1714c49bef22",
+					"name": "AccountName",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "9fe21ce3-2375-45d8-bbc0-11fc3ae4d93c",
+					"name": "Broker",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "7c67e654-46f6-4560-8bf3-3275850e6249",
+					"name": "Currency",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "'AUD'",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "dfc8dd0d-2a2e-4070-8b77-b3225d1bb054",
+					"name": "InitialBalance",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "be5fa4d1-c93b-4f8d-82e7-7fac023148e6",
+					"name": "PortfolioID",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": true,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "69d3049a-2271-45f4-8bd3-fe07b46d8999",
+					"name": "CreatedAt",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				}
+			],
+			"relations": [
+				"2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+				"00580ebe-b0e9-470f-bee4-7bee3a008a6a"
+			],
+			"keys": [
+				{
+					"id": "7e9236a8-d07b-40f8-88b1-dbb116a5a293",
+					"isPk": true,
+					"name": "Primary key",
+					"cols": [
+						{
+							"id": "1b9f11f6-8914-4cc0-b07c-a897c407b540",
+							"colid": "3edce3cc-45fd-4836-9a26-0d135e33642a"
+						}
+					]
+				},
+				{
+					"id": "cc9f5249-d79f-44cb-9b0b-56917427d0c3",
+					"isPk": false,
+					"name": "Accounts_key_1",
+					"cols": [
+						{
+							"id": "ff211e5e-17c3-4255-adbb-05b4f5b23cb1",
+							"colid": "80d845ac-cee1-4243-a4a9-297769421821"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"estimatedSize": "",
+			"sqlite": {
+				"withoutrowid": false,
+				"strict": false
+			},
+			"visible": true,
+			"customCode": ""
+		},
+		"ff19adcd-f82f-41bd-ad34-fbbbd195518b": {
+			"lines": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"id": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+			"name": "Strategies",
+			"desc": "",
+			"cols": [
+				{
+					"id": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240",
+					"name": "StrategyID",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": true
+					}
+				},
+				{
+					"id": "eb523b98-7c63-4216-97d1-0c3bd4aec61a",
+					"name": "StrategyName",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "77496bf4-5c7e-4ae8-bf83-6f8f24176b2b",
+					"name": "DisplayName",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "fa26dc57-b35a-4ea0-9d0d-caf17000b266",
+					"name": "Symbol",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "039c8f6f-1fa2-4438-9dff-1d5cbcd08fbb",
+					"name": "Timeframe",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "52cfe44f-d29c-4fc1-a2b8-29bf11eca9f1",
+					"name": "Direction",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "f7cdce7d-8b75-49bd-9041-48881a22aa51",
+					"name": "Style",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "d4550705-9252-482f-8ac1-c7e7709c9ecd",
+					"name": "MagicNumber",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "af53fc9d-09c3-4efb-95a5-5cdce9870aca",
+					"name": "AccountID",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": true,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "53f35f35-933a-4d8a-94f8-884c41f7e206",
+					"name": "Status",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "'Demo'",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "c8860f71-b9f1-4295-a972-c7f905a5afdf",
+					"name": "StartDate",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "55145452-f38d-4482-a974-3023307b9bfe",
+					"name": "Notes",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "80266d41-0288-4c4d-aa79-5128dcdc2000",
+					"name": "LiveNetProfit",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "6058da2e-5c32-4436-9c22-074e2c683632",
+					"name": "LiveTotalTrades",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "27f2df31-7ed5-40f8-8501-e8455b4cb15f",
+					"name": "LiveWinRate",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "ff3ed365-95cb-49ea-bc80-e24a5b1d11d5",
+					"name": "LiveProfitFactor",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "1baeced2-7961-464a-90c3-f4ef389abd09",
+					"name": "LiveSharpe",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "0afddac3-11e6-4955-b9bd-8068c39d533c",
+					"name": "LiveRetDD",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "fc5013ac-9be1-4c52-9d16-c441abfbb503",
+					"name": "LiveWLRatio",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "9fa1edbb-75bc-49f2-8ecf-7f2377b0e58e",
+					"name": "LiveRecovery",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "2b5f264b-b874-4505-981b-74b6b93e70a7",
+					"name": "LiveLRCorrelation",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "a84900d2-5d9d-4f23-ab9d-9a9d70770428",
+					"name": "LiveMaxDDDollars",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "df97130e-2e6d-424f-9d1f-5755c197f27b",
+					"name": "LiveMaxDDPct",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "f49bd579-4fda-429e-81f1-a4d2b07a85a0",
+					"name": "LiveExpectedPayoff",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "8c24810b-abd7-432d-8d56-d91bf2e5782e",
+					"name": "LiveAvgWin",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "a2385b31-438c-470a-884a-54079d6a0d82",
+					"name": "LiveAvgLoss",
+					"datatype": "REAL",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "0cb7a636-7ca7-4b2c-80df-d59ed2c45bd6",
+					"name": "LiveLongTrades",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "a829cb56-65cd-4e01-af92-5190acef68df",
+					"name": "LiveShortTrades",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "74317661-ae5e-4615-8864-7686cd5713c5",
+					"name": "LiveLastTradeDate",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "a8dc2218-333a-4337-bea5-eebb4f295e19",
+					"name": "LiveDaysTrading",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "0",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "13fbe541-d974-4be1-890f-c8a7856c2c8f",
+					"name": "LiveMetricsUpdatedAt",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "629d747e-fbba-48c5-be72-b57b05adffc0",
+					"name": "BacktestData",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "24d40d12-3a9d-43da-85f5-9efda24fed83",
+					"name": "BacktestEquityChart",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "6611abe4-5b8f-4c0a-baa3-3832f60bc0ce",
+					"name": "PseudoCode",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "ba440935-5f28-47ce-a304-f5c9d55780cf",
+					"name": "BacktestImportedAt",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "486bdbda-9767-499f-b305-8d7b70545c17",
+					"name": "CreatedAt",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "75dffdce-d952-4fab-9d3e-21ca87f76d6f",
+					"name": "UpdatedAt",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				}
+			],
+			"relations": [
+				"8e69e662-bf0a-459e-b8e4-c77896d8cbcf",
+				"00580ebe-b0e9-470f-bee4-7bee3a008a6a"
+			],
+			"keys": [
+				{
+					"id": "7c4385c2-b9bd-43cf-aa9e-dd9553d97dcd",
+					"isPk": true,
+					"name": "Primary key",
+					"cols": [
+						{
+							"id": "b4d665ad-7eb8-4e99-933c-e22253f27780",
+							"colid": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "a9c05a7e-3699-4cfb-8c53-505297bb03c9",
+					"unique": false,
+					"name": "idx_strategies_account",
+					"cols": [],
+					"sqlite": {
+						"expression": "",
+						"desc": ""
+					}
+				},
+				{
+					"id": "eb30b14c-7fe9-4567-b9dc-0603b3782e5d",
+					"unique": false,
+					"name": "idx_strategies_status",
+					"cols": [],
+					"sqlite": {
+						"expression": "",
+						"desc": ""
+					}
+				}
+			],
+			"estimatedSize": "",
+			"sqlite": {
+				"withoutrowid": false,
+				"strict": false
+			},
+			"visible": true,
+			"customCode": ""
+		},
+		"d04da671-825f-45b6-99e6-2fd852c27a19": {
+			"lines": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"id": "d04da671-825f-45b6-99e6-2fd852c27a19",
+			"name": "Portfolios",
+			"desc": "",
+			"cols": [
+				{
+					"id": "1957773a-73af-47e4-b987-d6617560e015",
+					"name": "PortfolioID",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": true
+					}
+				},
+				{
+					"id": "8a43af98-8fb5-4847-be08-ee66d6696e10",
+					"name": "PortfolioName",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "7d40615e-9479-41db-a1da-6e5d6f1e1961",
+					"name": "Description",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "3ab3de79-2cd2-4f6f-96d0-7fff5d0648af",
+					"name": "CreatedAt",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"data": "",
+					"estimatedSize": "",
+					"defaultvalue": "",
+					"collation": "",
+					"fk": false,
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				}
+			],
+			"relations": [
+				"2b2e81bb-42ac-4e7f-9331-39c6bf105bee"
+			],
+			"keys": [
+				{
+					"id": "8a159556-76bd-4456-9af3-e5d047a69b37",
+					"isPk": true,
+					"name": "Primary key",
+					"cols": [
+						{
+							"id": "249a4dd5-c42b-4d93-9555-1a9e60a65446",
+							"colid": "1957773a-73af-47e4-b987-d6617560e015"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"estimatedSize": "",
+			"sqlite": {
+				"withoutrowid": false,
+				"strict": false
+			},
+			"visible": true,
+			"customCode": ""
+		}
+	},
+	"relations": {
+		"8e69e662-bf0a-459e-b8e4-c77896d8cbcf": {
+			"id": "8e69e662-bf0a-459e-b8e4-c77896d8cbcf",
+			"type": "identifying",
+			"cols": [
+				{
+					"id": "f6265e84-e9dc-4611-ab78-be69fca17293",
+					"parentcol": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240",
+					"childcol": "15355e96-6adc-4864-9138-9a31f18b3cc3"
+				}
+			],
+			"child": "0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+			"parent": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+			"c_mp": "false",
+			"c_mch": "false",
+			"c_ch": "many",
+			"c_p": "one",
+			"c_cp": "",
+			"c_cch": "",
+			"name": "Strategies_Trades",
+			"desc": "",
+			"parent_key": "7c4385c2-b9bd-43cf-aa9e-dd9553d97dcd",
+			"ri_pd": "No action",
+			"ri_pu": "No action",
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": ""
+		},
+		"2b2e81bb-42ac-4e7f-9331-39c6bf105bee": {
+			"id": "2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+			"type": "identifying",
+			"cols": [
+				{
+					"id": "31dc5b17-7f63-4482-ae3f-8d25433f1679",
+					"parentcol": "1957773a-73af-47e4-b987-d6617560e015",
+					"childcol": "be5fa4d1-c93b-4f8d-82e7-7fac023148e6"
+				}
+			],
+			"child": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+			"parent": "d04da671-825f-45b6-99e6-2fd852c27a19",
+			"c_mp": "false",
+			"c_mch": "false",
+			"c_ch": "many",
+			"c_p": "one",
+			"c_cp": "",
+			"c_cch": "",
+			"name": "Portfolios_Accounts",
+			"desc": "",
+			"parent_key": "8a159556-76bd-4456-9af3-e5d047a69b37",
+			"ri_pd": "No action",
+			"ri_pu": "No action",
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": ""
+		},
+		"00580ebe-b0e9-470f-bee4-7bee3a008a6a": {
+			"id": "00580ebe-b0e9-470f-bee4-7bee3a008a6a",
+			"type": "identifying",
+			"cols": [
+				{
+					"id": "2220ad4f-5cdd-414e-871c-4fc6df74a265",
+					"parentcol": "3edce3cc-45fd-4836-9a26-0d135e33642a",
+					"childcol": "af53fc9d-09c3-4efb-95a5-5cdce9870aca"
+				}
+			],
+			"child": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+			"parent": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+			"c_mp": "false",
+			"c_mch": "false",
+			"c_ch": "many",
+			"c_p": "one",
+			"c_cp": "",
+			"c_cch": "",
+			"name": "Accounts_Strategies",
+			"desc": "",
+			"parent_key": "7e9236a8-d07b-40f8-88b1-dbb116a5a293",
+			"ri_pd": "No action",
+			"ri_pu": "No action",
+			"generate": true,
+			"generateCustomCode": true,
+			"customCode": ""
+		}
+	},
+	"notes": {},
+	"lines": {},
+	"model": {
+		"connectionId": "ab363961-43fb-4f09-a7f5-d02a010a242e",
+		"connectionVersion": "[{\"schema_version\":63}]",
+		"activeDiagram": "bc730022-b2eb-41dd-9e41-f67269a134ac",
+		"caseConvention": "under",
+		"color": "transparent",
+		"def_coltopk": true,
+		"desc": "",
+		"id": "f9a58291-32c6-472f-95cb-a4190a6ecf09",
+		"isDirty": true,
+		"name": "SQLite",
+		"parentTableInFkCols": true,
+		"path": "",
+		"replaceSpace": "_",
+		"sideSelections": true,
+		"storedin": {
+			"major": 13,
+			"minor": 0,
+			"extra": 0
+		},
+		"laststoredin": {
+			"major": 13,
+			"minor": 0,
+			"extra": 0
+		},
+		"type": "SQLITE",
+		"appName": "LunaModeler",
+		"subType": "",
+		"version": 1,
+		"lastSaved": 1770942014838,
+		"sqlSettings": {
+			"wrapLines": true,
+			"wrapOffset": 80,
+			"indent": true,
+			"indentationString": "spaces",
+			"indentationSize": 2,
+			"limitItemsOnLine": true,
+			"maxListItemsOnLine": 3,
+			"statementDelimiter": ";",
+			"routineDelimiter": ";",
+			"keywordCase": "upper",
+			"identiferCase": "original",
+			"quotationExistance": "if_needed"
+		},
+		"writeFileParam": false,
+		"authorName": "",
+		"companyDetails": "",
+		"companyUrl": "",
+		"synchronizationSettings": {
+			"preserveData": "use_temporary_tables",
+			"ignoreSystemDefaults": "yes",
+			"includeWarnings": "yes",
+			"includeCreationSql": "no"
+		}
+	},
+	"otherObjects": {},
+	"diagrams": {
+		"bc730022-b2eb-41dd-9e41-f67269a134ac": {
+			"id": "bc730022-b2eb-41dd-9e41-f67269a134ac",
+			"lineColor": "transparent",
+			"description": "",
+			"diagramItems": {
+				"0aba6f35-3fdf-4a86-93ce-bfa4b98b782d": {
+					"x": 1506,
+					"y": 209,
+					"gHeight": 405,
+					"gWidth": 219,
+					"background": "#03a9f4",
+					"color": "#ffffff",
+					"referencedItemId": "0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+					"resized": false,
+					"autoExpand": true,
+					"backgroundOpacity": "10",
+					"borderColor": "#666666",
+					"borderStyle": "none",
+					"borderWidth": 2,
+					"assetAspectRatio": "none",
+					"assetTextPosition": "right",
+					"assetShowText": true,
+					"areaHeaderDisplayed": true,
+					"areaHeaderColor": "transparent",
+					"areaHeaderBackground": "transparent",
+					"cardBackground": "transparent"
+				},
+				"55017dfa-dd9c-4f4c-b26a-b3eac4f76580": {
+					"x": 575,
+					"y": 326,
+					"gHeight": 171,
+					"gWidth": 215,
+					"background": "#03a9f4",
+					"color": "#ffffff",
+					"referencedItemId": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+					"resized": false,
+					"autoExpand": true,
+					"backgroundOpacity": "10",
+					"borderColor": "#666666",
+					"borderStyle": "none",
+					"borderWidth": 2,
+					"assetAspectRatio": "none",
+					"assetTextPosition": "right",
+					"assetShowText": true,
+					"areaHeaderDisplayed": true,
+					"areaHeaderColor": "transparent",
+					"areaHeaderBackground": "transparent",
+					"cardBackground": "transparent"
+				},
+				"ff19adcd-f82f-41bd-ad34-fbbbd195518b": {
+					"x": 1025,
+					"y": 153,
+					"gHeight": 693,
+					"gWidth": 243,
+					"background": "#03a9f4",
+					"color": "#ffffff",
+					"referencedItemId": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+					"resized": false,
+					"autoExpand": true,
+					"backgroundOpacity": "10",
+					"borderColor": "#666666",
+					"borderStyle": "none",
+					"borderWidth": 2,
+					"assetAspectRatio": "none",
+					"assetTextPosition": "right",
+					"assetShowText": true,
+					"areaHeaderDisplayed": true,
+					"areaHeaderColor": "transparent",
+					"areaHeaderBackground": "transparent",
+					"cardBackground": "transparent"
+				},
+				"d04da671-825f-45b6-99e6-2fd852c27a19": {
+					"x": 185,
+					"y": 278,
+					"gHeight": 99,
+					"gWidth": 202,
+					"background": "#03a9f4",
+					"color": "#ffffff",
+					"referencedItemId": "d04da671-825f-45b6-99e6-2fd852c27a19",
+					"resized": false,
+					"autoExpand": true,
+					"backgroundOpacity": "10",
+					"borderColor": "#666666",
+					"borderStyle": "none",
+					"borderWidth": 2,
+					"assetAspectRatio": "none",
+					"assetTextPosition": "right",
+					"assetShowText": true,
+					"areaHeaderDisplayed": true,
+					"areaHeaderColor": "transparent",
+					"areaHeaderBackground": "transparent",
+					"cardBackground": "transparent"
+				}
+			},
+			"diagramLinks": {
+				"00580ebe-b0e9-470f-bee4-7bee3a008a6a": {
+					"referencedItemId": "00580ebe-b0e9-470f-bee4-7bee3a008a6a",
+					"color": "transparent",
+					"mode": "detailed",
+					"anchorStart": "default",
+					"anchorEnd": "default",
+					"anchorDetailedStart": "default",
+					"anchorDetailedEnd": "default",
+					"width": 2
+				},
+				"2b2e81bb-42ac-4e7f-9331-39c6bf105bee": {
+					"referencedItemId": "2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+					"color": "transparent",
+					"mode": "detailed",
+					"anchorStart": "default",
+					"anchorEnd": "default",
+					"anchorDetailedStart": "default",
+					"anchorDetailedEnd": "default",
+					"width": 2
+				},
+				"8e69e662-bf0a-459e-b8e4-c77896d8cbcf": {
+					"referencedItemId": "8e69e662-bf0a-459e-b8e4-c77896d8cbcf",
+					"color": "transparent",
+					"mode": "detailed",
+					"anchorStart": "default",
+					"anchorEnd": "default",
+					"anchorDetailedStart": "default",
+					"anchorDetailedEnd": "default",
+					"width": 2
+				}
+			},
+			"isOpen": true,
+			"main": true,
+			"name": "Main Diagram",
+			"keysgraphics": true,
+			"linegraphics": "detailed",
+			"zoom": 1,
+			"background": "transparent",
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"type": "erd",
+			"showEstimatedSize": false,
+			"showSchemaContainer": false,
+			"showEmbeddedInParents": true,
+			"showCardinalityCaptions": false,
+			"showRelationshipNames": false,
+			"showLineCaptions": false,
+			"showDependencyCaptions": false,
+			"showColumns": true,
+			"showColumnDataTypes": true,
+			"showSampleData": false,
+			"showTableIndexes": false,
+			"showTableDescriptions": false,
+			"showRelations": true,
+			"showLines": true,
+			"showDependencies": true,
+			"showHorizontal": false,
+			"showDescriptions": true,
+			"showIndicators": false,
+			"showProgress": false,
+			"showIndicatorCaptions": false,
+			"backgroundImage": "na",
+			"descriptionsColor": "transparent",
+			"boxSize": "0",
+			"boxSpacing": "2",
+			"boxAlign": "center",
+			"lineWidth": "2",
+			"embeddedSpacing": "2",
+			"showLabels": true,
+			"showMainIcon": true,
+			"showCustomizations": false,
+			"showExportDimensions": false,
+			"showCompleted": true,
+			"showAnimations": false
+		}
+	},
+	"diagramsOrder": [],
+	"order": [
+		"55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+		"d04da671-825f-45b6-99e6-2fd852c27a19",
+		"ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+		"0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+		"00580ebe-b0e9-470f-bee4-7bee3a008a6a",
+		"2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+		"8e69e662-bf0a-459e-b8e4-c77896d8cbcf"
+	],
+	"collapsedTreeItems": [],
+	"reverseStats": {
+		"currentModel": {
+			"model": {
+				"connectionId": "ab363961-43fb-4f09-a7f5-d02a010a242e",
+				"connectionVersion": "[{\"schema_version\":60}]",
+				"activeDiagram": "bc730022-b2eb-41dd-9e41-f67269a134ac",
+				"caseConvention": "under",
+				"color": "transparent",
+				"def_coltopk": true,
+				"desc": "",
+				"id": "f9a58291-32c6-472f-95cb-a4190a6ecf09",
+				"isDirty": true,
+				"name": "SQLite",
+				"parentTableInFkCols": true,
+				"path": "",
+				"replaceSpace": "_",
+				"sideSelections": true,
+				"storedin": {
+					"major": 13,
+					"minor": 0,
+					"extra": 0
+				},
+				"laststoredin": {
+					"major": 13,
+					"minor": 0,
+					"extra": 0
+				},
+				"type": "SQLITE",
+				"appName": "LunaModeler",
+				"subType": "",
+				"version": 1,
+				"filePath": "D:\\Portfolio_Tracker\\Portfolio Tracker-version-x.dmm",
+				"lastSaved": 1770942014838,
+				"sqlSettings": {
+					"wrapLines": true,
+					"wrapOffset": 80,
+					"indent": true,
+					"indentationString": "spaces",
+					"indentationSize": 2,
+					"limitItemsOnLine": true,
+					"maxListItemsOnLine": 3,
+					"statementDelimiter": ";",
+					"routineDelimiter": ";",
+					"keywordCase": "upper",
+					"identiferCase": "original",
+					"quotationExistance": "if_needed"
+				},
+				"writeFileParam": false,
+				"authorName": "",
+				"companyDetails": "",
+				"companyUrl": "",
+				"synchronizationSettings": {
+					"preserveData": "use_temporary_tables",
+					"ignoreSystemDefaults": "yes",
+					"includeWarnings": "yes",
+					"includeCreationSql": "no"
+				}
+			},
+			"tables": {
+				"0aba6f35-3fdf-4a86-93ce-bfa4b98b782d": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+					"name": "Trades",
+					"desc": "",
+					"cols": [
+						{
+							"id": "d370e92a-643b-4544-96bf-6ac915032931",
+							"name": "TradeID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "0e8b99f0-a9a4-427d-8db6-214d5fc728e7",
+							"name": "Ticket",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "15355e96-6adc-4864-9138-9a31f18b3cc3",
+							"name": "StrategyID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": true,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "fd943b9e-61b7-4c91-b887-c53ce55e114b",
+							"name": "Symbol",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "acbda764-58b3-4f35-a299-578d736e8f5f",
+							"name": "Type",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "18bcf51e-c7e8-45bb-9978-eab1c4770dcf",
+							"name": "Lots",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "0b37dbd4-bf8d-4922-8e92-26b32551c3ca",
+							"name": "OpenPrice",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "b9f8fa1d-b464-4304-8795-1db22b406b16",
+							"name": "ClosePrice",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "726bb5d2-83ca-4d83-a8f8-db90f22aa5bb",
+							"name": "OpenTime",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "c05b5361-de7b-40e8-b435-3abbbe12c886",
+							"name": "CloseTime",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "55532985-f2da-49ee-95bc-2f9d8a27ba5a",
+							"name": "Profit",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "11c93c28-f150-4417-8572-f3b99af55aea",
+							"name": "Swap",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9f5a2c97-258e-4373-9c60-a9c91bf50dcf",
+							"name": "Commission",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "6cd31173-16dc-497a-a247-ffb2eacc3b06",
+							"name": "NetProfit",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "23158201-f351-4384-9ba5-bdb52c2a1eb7",
+							"name": "TP",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "3aea20ad-3deb-4985-af87-1cc2de8acc16",
+							"name": "SL",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "18ae3066-cc71-451f-8b3e-73ff9e1b0712",
+							"name": "Pips",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "2a63fc44-4153-443d-a912-7d3da512ed51",
+							"name": "MagicNumber",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "12c597ac-0961-4a15-9974-ce3eca23cd49",
+							"name": "Comment",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "83e7ab9c-d3b9-48ea-828d-ef324b1932fa",
+							"name": "BalanceAfter",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "76113ed6-57db-4158-87d1-432af35ee636",
+							"name": "ImportedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"8e69e662-bf0a-459e-b8e4-c77896d8cbcf"
+					],
+					"keys": [
+						{
+							"id": "3e205e6b-bcc2-4f34-9b06-cdc400bfa794",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "4b53523a-6f79-4c9e-8793-016c3e75c0b7",
+									"colid": "d370e92a-643b-4544-96bf-6ac915032931"
+								}
+							]
+						},
+						{
+							"id": "84ea3fcd-07fc-403e-a0c1-4f29d5a0b194",
+							"isPk": false,
+							"name": "Trades_key_1",
+							"cols": [
+								{
+									"id": "ed262b1e-0f4c-43d8-8770-07b832750fb0",
+									"colid": "0e8b99f0-a9a4-427d-8db6-214d5fc728e7"
+								}
+							]
+						}
+					],
+					"indexes": [
+						{
+							"id": "48e994b1-ba09-4dbe-bf0c-593425e82b8c",
+							"unique": false,
+							"name": "idx_trades_closetime",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						},
+						{
+							"id": "85f256a9-a668-4e0b-9e76-7d5d1530995e",
+							"unique": false,
+							"name": "idx_trades_comment",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						},
+						{
+							"id": "e1ceb8d4-e4cc-4917-a210-77950809bba6",
+							"unique": false,
+							"name": "idx_trades_strategy",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						}
+					],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				},
+				"55017dfa-dd9c-4f4c-b26a-b3eac4f76580": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+					"name": "Accounts",
+					"desc": "",
+					"cols": [
+						{
+							"id": "3edce3cc-45fd-4836-9a26-0d135e33642a",
+							"name": "AccountID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "80d845ac-cee1-4243-a4a9-297769421821",
+							"name": "AccountLogin",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9745fba9-7168-47c2-a3c2-1714c49bef22",
+							"name": "AccountName",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9fe21ce3-2375-45d8-bbc0-11fc3ae4d93c",
+							"name": "Broker",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "7c67e654-46f6-4560-8bf3-3275850e6249",
+							"name": "Currency",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "'AUD'",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "dfc8dd0d-2a2e-4070-8b77-b3225d1bb054",
+							"name": "InitialBalance",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "be5fa4d1-c93b-4f8d-82e7-7fac023148e6",
+							"name": "PortfolioID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": true,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "69d3049a-2271-45f4-8bd3-fe07b46d8999",
+							"name": "CreatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+						"00580ebe-b0e9-470f-bee4-7bee3a008a6a"
+					],
+					"keys": [
+						{
+							"id": "7e9236a8-d07b-40f8-88b1-dbb116a5a293",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "1b9f11f6-8914-4cc0-b07c-a897c407b540",
+									"colid": "3edce3cc-45fd-4836-9a26-0d135e33642a"
+								}
+							]
+						},
+						{
+							"id": "cc9f5249-d79f-44cb-9b0b-56917427d0c3",
+							"isPk": false,
+							"name": "Accounts_key_1",
+							"cols": [
+								{
+									"id": "ff211e5e-17c3-4255-adbb-05b4f5b23cb1",
+									"colid": "80d845ac-cee1-4243-a4a9-297769421821"
+								}
+							]
+						}
+					],
+					"indexes": [],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				},
+				"ff19adcd-f82f-41bd-ad34-fbbbd195518b": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+					"name": "Strategies",
+					"desc": "",
+					"cols": [
+						{
+							"id": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240",
+							"name": "StrategyID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "eb523b98-7c63-4216-97d1-0c3bd4aec61a",
+							"name": "StrategyName",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "77496bf4-5c7e-4ae8-bf83-6f8f24176b2b",
+							"name": "DisplayName",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "fa26dc57-b35a-4ea0-9d0d-caf17000b266",
+							"name": "Symbol",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "039c8f6f-1fa2-4438-9dff-1d5cbcd08fbb",
+							"name": "Timeframe",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "52cfe44f-d29c-4fc1-a2b8-29bf11eca9f1",
+							"name": "Direction",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "f7cdce7d-8b75-49bd-9041-48881a22aa51",
+							"name": "Style",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "d4550705-9252-482f-8ac1-c7e7709c9ecd",
+							"name": "MagicNumber",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "af53fc9d-09c3-4efb-95a5-5cdce9870aca",
+							"name": "AccountID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": true,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "53f35f35-933a-4d8a-94f8-884c41f7e206",
+							"name": "Status",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "'Demo'",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "c8860f71-b9f1-4295-a972-c7f905a5afdf",
+							"name": "StartDate",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "55145452-f38d-4482-a974-3023307b9bfe",
+							"name": "Notes",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "80266d41-0288-4c4d-aa79-5128dcdc2000",
+							"name": "LiveNetProfit",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "6058da2e-5c32-4436-9c22-074e2c683632",
+							"name": "LiveTotalTrades",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "27f2df31-7ed5-40f8-8501-e8455b4cb15f",
+							"name": "LiveWinRate",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "ff3ed365-95cb-49ea-bc80-e24a5b1d11d5",
+							"name": "LiveProfitFactor",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "1baeced2-7961-464a-90c3-f4ef389abd09",
+							"name": "LiveSharpe",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "0afddac3-11e6-4955-b9bd-8068c39d533c",
+							"name": "LiveRetDD",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "fc5013ac-9be1-4c52-9d16-c441abfbb503",
+							"name": "LiveWLRatio",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9fa1edbb-75bc-49f2-8ecf-7f2377b0e58e",
+							"name": "LiveRecovery",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "2b5f264b-b874-4505-981b-74b6b93e70a7",
+							"name": "LiveLRCorrelation",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a84900d2-5d9d-4f23-ab9d-9a9d70770428",
+							"name": "LiveMaxDDDollars",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "df97130e-2e6d-424f-9d1f-5755c197f27b",
+							"name": "LiveMaxDDPct",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "f49bd579-4fda-429e-81f1-a4d2b07a85a0",
+							"name": "LiveExpectedPayoff",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "8c24810b-abd7-432d-8d56-d91bf2e5782e",
+							"name": "LiveAvgWin",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a2385b31-438c-470a-884a-54079d6a0d82",
+							"name": "LiveAvgLoss",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "0cb7a636-7ca7-4b2c-80df-d59ed2c45bd6",
+							"name": "LiveLongTrades",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a829cb56-65cd-4e01-af92-5190acef68df",
+							"name": "LiveShortTrades",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "74317661-ae5e-4615-8864-7686cd5713c5",
+							"name": "LiveLastTradeDate",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a8dc2218-333a-4337-bea5-eebb4f295e19",
+							"name": "LiveDaysTrading",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "13fbe541-d974-4be1-890f-c8a7856c2c8f",
+							"name": "LiveMetricsUpdatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "629d747e-fbba-48c5-be72-b57b05adffc0",
+							"name": "BacktestData",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "24d40d12-3a9d-43da-85f5-9efda24fed83",
+							"name": "BacktestEquityChart",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "6611abe4-5b8f-4c0a-baa3-3832f60bc0ce",
+							"name": "PseudoCode",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "ba440935-5f28-47ce-a304-f5c9d55780cf",
+							"name": "BacktestImportedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "486bdbda-9767-499f-b305-8d7b70545c17",
+							"name": "CreatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "75dffdce-d952-4fab-9d3e-21ca87f76d6f",
+							"name": "UpdatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"8e69e662-bf0a-459e-b8e4-c77896d8cbcf",
+						"00580ebe-b0e9-470f-bee4-7bee3a008a6a"
+					],
+					"keys": [
+						{
+							"id": "7c4385c2-b9bd-43cf-aa9e-dd9553d97dcd",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "b4d665ad-7eb8-4e99-933c-e22253f27780",
+									"colid": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240"
+								}
+							]
+						}
+					],
+					"indexes": [
+						{
+							"id": "a9c05a7e-3699-4cfb-8c53-505297bb03c9",
+							"unique": false,
+							"name": "idx_strategies_account",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						},
+						{
+							"id": "eb30b14c-7fe9-4567-b9dc-0603b3782e5d",
+							"unique": false,
+							"name": "idx_strategies_status",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						}
+					],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				},
+				"d04da671-825f-45b6-99e6-2fd852c27a19": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "d04da671-825f-45b6-99e6-2fd852c27a19",
+					"name": "Portfolios",
+					"desc": "",
+					"cols": [
+						{
+							"id": "1957773a-73af-47e4-b987-d6617560e015",
+							"name": "PortfolioID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "aef94a4b-599b-4553-bdc0-c832e16dc8fa",
+							"name": "PortfolioName2",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "7d40615e-9479-41db-a1da-6e5d6f1e1961",
+							"name": "Description",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "3ab3de79-2cd2-4f6f-96d0-7fff5d0648af",
+							"name": "CreatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"2b2e81bb-42ac-4e7f-9331-39c6bf105bee"
+					],
+					"keys": [
+						{
+							"id": "8a159556-76bd-4456-9af3-e5d047a69b37",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "249a4dd5-c42b-4d93-9555-1a9e60a65446",
+									"colid": "1957773a-73af-47e4-b987-d6617560e015"
+								}
+							]
+						}
+					],
+					"indexes": [],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				}
+			},
+			"relations": {
+				"8e69e662-bf0a-459e-b8e4-c77896d8cbcf": {
+					"id": "8e69e662-bf0a-459e-b8e4-c77896d8cbcf",
+					"type": "identifying",
+					"cols": [
+						{
+							"id": "f6265e84-e9dc-4611-ab78-be69fca17293",
+							"parentcol": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240",
+							"childcol": "15355e96-6adc-4864-9138-9a31f18b3cc3"
+						}
+					],
+					"child": "0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+					"parent": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+					"c_mp": "false",
+					"c_mch": "false",
+					"c_ch": "many",
+					"c_p": "one",
+					"c_cp": "",
+					"c_cch": "",
+					"name": "Strategies_Trades",
+					"desc": "",
+					"parent_key": "7c4385c2-b9bd-43cf-aa9e-dd9553d97dcd",
+					"ri_pd": "No action",
+					"ri_pu": "No action",
+					"generate": true,
+					"generateCustomCode": true,
+					"customCode": ""
+				},
+				"2b2e81bb-42ac-4e7f-9331-39c6bf105bee": {
+					"id": "2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+					"type": "identifying",
+					"cols": [
+						{
+							"id": "31dc5b17-7f63-4482-ae3f-8d25433f1679",
+							"parentcol": "1957773a-73af-47e4-b987-d6617560e015",
+							"childcol": "be5fa4d1-c93b-4f8d-82e7-7fac023148e6"
+						}
+					],
+					"child": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+					"parent": "d04da671-825f-45b6-99e6-2fd852c27a19",
+					"c_mp": "false",
+					"c_mch": "false",
+					"c_ch": "many",
+					"c_p": "one",
+					"c_cp": "",
+					"c_cch": "",
+					"name": "Portfolios_Accounts",
+					"desc": "",
+					"parent_key": "8a159556-76bd-4456-9af3-e5d047a69b37",
+					"ri_pd": "No action",
+					"ri_pu": "No action",
+					"generate": true,
+					"generateCustomCode": true,
+					"customCode": ""
+				},
+				"00580ebe-b0e9-470f-bee4-7bee3a008a6a": {
+					"id": "00580ebe-b0e9-470f-bee4-7bee3a008a6a",
+					"type": "identifying",
+					"cols": [
+						{
+							"id": "2220ad4f-5cdd-414e-871c-4fc6df74a265",
+							"parentcol": "3edce3cc-45fd-4836-9a26-0d135e33642a",
+							"childcol": "af53fc9d-09c3-4efb-95a5-5cdce9870aca"
+						}
+					],
+					"child": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+					"parent": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+					"c_mp": "false",
+					"c_mch": "false",
+					"c_ch": "many",
+					"c_p": "one",
+					"c_cp": "",
+					"c_cch": "",
+					"name": "Accounts_Strategies",
+					"desc": "",
+					"parent_key": "7e9236a8-d07b-40f8-88b1-dbb116a5a293",
+					"ri_pd": "No action",
+					"ri_pu": "No action",
+					"generate": true,
+					"generateCustomCode": true,
+					"customCode": ""
+				}
+			},
+			"otherObjects": {}
+		},
+		"updatedModel": {
+			"model": {
+				"connectionId": "ab363961-43fb-4f09-a7f5-d02a010a242e",
+				"connectionVersion": "[{\"schema_version\":63}]",
+				"activeDiagram": "bc730022-b2eb-41dd-9e41-f67269a134ac",
+				"caseConvention": "under",
+				"color": "transparent",
+				"def_coltopk": true,
+				"desc": "",
+				"id": "f9a58291-32c6-472f-95cb-a4190a6ecf09",
+				"isDirty": true,
+				"name": "SQLite",
+				"parentTableInFkCols": true,
+				"path": "",
+				"replaceSpace": "_",
+				"sideSelections": true,
+				"storedin": {
+					"major": 13,
+					"minor": 0,
+					"extra": 0
+				},
+				"laststoredin": {
+					"major": 13,
+					"minor": 0,
+					"extra": 0
+				},
+				"type": "SQLITE",
+				"appName": "LunaModeler",
+				"subType": "",
+				"version": 1,
+				"filePath": "D:\\Portfolio_Tracker\\Portfolio Tracker-version-x.dmm",
+				"lastSaved": 1770942014838,
+				"sqlSettings": {
+					"wrapLines": true,
+					"wrapOffset": 80,
+					"indent": true,
+					"indentationString": "spaces",
+					"indentationSize": 2,
+					"limitItemsOnLine": true,
+					"maxListItemsOnLine": 3,
+					"statementDelimiter": ";",
+					"routineDelimiter": ";",
+					"keywordCase": "upper",
+					"identiferCase": "original",
+					"quotationExistance": "if_needed"
+				},
+				"writeFileParam": false,
+				"authorName": "",
+				"companyDetails": "",
+				"companyUrl": "",
+				"synchronizationSettings": {
+					"preserveData": "use_temporary_tables",
+					"ignoreSystemDefaults": "yes",
+					"includeWarnings": "yes",
+					"includeCreationSql": "no"
+				}
+			},
+			"tables": {
+				"0aba6f35-3fdf-4a86-93ce-bfa4b98b782d": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+					"name": "Trades",
+					"desc": "",
+					"cols": [
+						{
+							"id": "d370e92a-643b-4544-96bf-6ac915032931",
+							"name": "TradeID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "0e8b99f0-a9a4-427d-8db6-214d5fc728e7",
+							"name": "Ticket",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "15355e96-6adc-4864-9138-9a31f18b3cc3",
+							"name": "StrategyID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": true,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "fd943b9e-61b7-4c91-b887-c53ce55e114b",
+							"name": "Symbol",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "acbda764-58b3-4f35-a299-578d736e8f5f",
+							"name": "Type",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "18bcf51e-c7e8-45bb-9978-eab1c4770dcf",
+							"name": "Lots",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "0b37dbd4-bf8d-4922-8e92-26b32551c3ca",
+							"name": "OpenPrice",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "b9f8fa1d-b464-4304-8795-1db22b406b16",
+							"name": "ClosePrice",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "726bb5d2-83ca-4d83-a8f8-db90f22aa5bb",
+							"name": "OpenTime",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "c05b5361-de7b-40e8-b435-3abbbe12c886",
+							"name": "CloseTime",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "55532985-f2da-49ee-95bc-2f9d8a27ba5a",
+							"name": "Profit",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "11c93c28-f150-4417-8572-f3b99af55aea",
+							"name": "Swap",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9f5a2c97-258e-4373-9c60-a9c91bf50dcf",
+							"name": "Commission",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "6cd31173-16dc-497a-a247-ffb2eacc3b06",
+							"name": "NetProfit",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "23158201-f351-4384-9ba5-bdb52c2a1eb7",
+							"name": "TP",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "3aea20ad-3deb-4985-af87-1cc2de8acc16",
+							"name": "SL",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "18ae3066-cc71-451f-8b3e-73ff9e1b0712",
+							"name": "Pips",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "2a63fc44-4153-443d-a912-7d3da512ed51",
+							"name": "MagicNumber",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "12c597ac-0961-4a15-9974-ce3eca23cd49",
+							"name": "Comment",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "83e7ab9c-d3b9-48ea-828d-ef324b1932fa",
+							"name": "BalanceAfter",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "76113ed6-57db-4158-87d1-432af35ee636",
+							"name": "ImportedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"8e69e662-bf0a-459e-b8e4-c77896d8cbcf"
+					],
+					"keys": [
+						{
+							"id": "3e205e6b-bcc2-4f34-9b06-cdc400bfa794",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "4b53523a-6f79-4c9e-8793-016c3e75c0b7",
+									"colid": "d370e92a-643b-4544-96bf-6ac915032931"
+								}
+							]
+						},
+						{
+							"id": "84ea3fcd-07fc-403e-a0c1-4f29d5a0b194",
+							"isPk": false,
+							"name": "Trades_key_1",
+							"cols": [
+								{
+									"id": "ed262b1e-0f4c-43d8-8770-07b832750fb0",
+									"colid": "0e8b99f0-a9a4-427d-8db6-214d5fc728e7"
+								}
+							]
+						}
+					],
+					"indexes": [
+						{
+							"id": "48e994b1-ba09-4dbe-bf0c-593425e82b8c",
+							"unique": false,
+							"name": "idx_trades_closetime",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						},
+						{
+							"id": "85f256a9-a668-4e0b-9e76-7d5d1530995e",
+							"unique": false,
+							"name": "idx_trades_comment",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						},
+						{
+							"id": "e1ceb8d4-e4cc-4917-a210-77950809bba6",
+							"unique": false,
+							"name": "idx_trades_strategy",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						}
+					],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				},
+				"55017dfa-dd9c-4f4c-b26a-b3eac4f76580": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+					"name": "Accounts",
+					"desc": "",
+					"cols": [
+						{
+							"id": "3edce3cc-45fd-4836-9a26-0d135e33642a",
+							"name": "AccountID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "80d845ac-cee1-4243-a4a9-297769421821",
+							"name": "AccountLogin",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9745fba9-7168-47c2-a3c2-1714c49bef22",
+							"name": "AccountName",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9fe21ce3-2375-45d8-bbc0-11fc3ae4d93c",
+							"name": "Broker",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "7c67e654-46f6-4560-8bf3-3275850e6249",
+							"name": "Currency",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "'AUD'",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "dfc8dd0d-2a2e-4070-8b77-b3225d1bb054",
+							"name": "InitialBalance",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "be5fa4d1-c93b-4f8d-82e7-7fac023148e6",
+							"name": "PortfolioID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": true,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "69d3049a-2271-45f4-8bd3-fe07b46d8999",
+							"name": "CreatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+						"00580ebe-b0e9-470f-bee4-7bee3a008a6a"
+					],
+					"keys": [
+						{
+							"id": "7e9236a8-d07b-40f8-88b1-dbb116a5a293",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "1b9f11f6-8914-4cc0-b07c-a897c407b540",
+									"colid": "3edce3cc-45fd-4836-9a26-0d135e33642a"
+								}
+							]
+						},
+						{
+							"id": "cc9f5249-d79f-44cb-9b0b-56917427d0c3",
+							"isPk": false,
+							"name": "Accounts_key_1",
+							"cols": [
+								{
+									"id": "ff211e5e-17c3-4255-adbb-05b4f5b23cb1",
+									"colid": "80d845ac-cee1-4243-a4a9-297769421821"
+								}
+							]
+						}
+					],
+					"indexes": [],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				},
+				"ff19adcd-f82f-41bd-ad34-fbbbd195518b": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+					"name": "Strategies",
+					"desc": "",
+					"cols": [
+						{
+							"id": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240",
+							"name": "StrategyID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "eb523b98-7c63-4216-97d1-0c3bd4aec61a",
+							"name": "StrategyName",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "77496bf4-5c7e-4ae8-bf83-6f8f24176b2b",
+							"name": "DisplayName",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "fa26dc57-b35a-4ea0-9d0d-caf17000b266",
+							"name": "Symbol",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "039c8f6f-1fa2-4438-9dff-1d5cbcd08fbb",
+							"name": "Timeframe",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "52cfe44f-d29c-4fc1-a2b8-29bf11eca9f1",
+							"name": "Direction",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "f7cdce7d-8b75-49bd-9041-48881a22aa51",
+							"name": "Style",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "d4550705-9252-482f-8ac1-c7e7709c9ecd",
+							"name": "MagicNumber",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "af53fc9d-09c3-4efb-95a5-5cdce9870aca",
+							"name": "AccountID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": true,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "53f35f35-933a-4d8a-94f8-884c41f7e206",
+							"name": "Status",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "'Demo'",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "c8860f71-b9f1-4295-a972-c7f905a5afdf",
+							"name": "StartDate",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "55145452-f38d-4482-a974-3023307b9bfe",
+							"name": "Notes",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "80266d41-0288-4c4d-aa79-5128dcdc2000",
+							"name": "LiveNetProfit",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "6058da2e-5c32-4436-9c22-074e2c683632",
+							"name": "LiveTotalTrades",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "27f2df31-7ed5-40f8-8501-e8455b4cb15f",
+							"name": "LiveWinRate",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "ff3ed365-95cb-49ea-bc80-e24a5b1d11d5",
+							"name": "LiveProfitFactor",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "1baeced2-7961-464a-90c3-f4ef389abd09",
+							"name": "LiveSharpe",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "0afddac3-11e6-4955-b9bd-8068c39d533c",
+							"name": "LiveRetDD",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "fc5013ac-9be1-4c52-9d16-c441abfbb503",
+							"name": "LiveWLRatio",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "9fa1edbb-75bc-49f2-8ecf-7f2377b0e58e",
+							"name": "LiveRecovery",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "2b5f264b-b874-4505-981b-74b6b93e70a7",
+							"name": "LiveLRCorrelation",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a84900d2-5d9d-4f23-ab9d-9a9d70770428",
+							"name": "LiveMaxDDDollars",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "df97130e-2e6d-424f-9d1f-5755c197f27b",
+							"name": "LiveMaxDDPct",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "f49bd579-4fda-429e-81f1-a4d2b07a85a0",
+							"name": "LiveExpectedPayoff",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "8c24810b-abd7-432d-8d56-d91bf2e5782e",
+							"name": "LiveAvgWin",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a2385b31-438c-470a-884a-54079d6a0d82",
+							"name": "LiveAvgLoss",
+							"datatype": "REAL",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "0cb7a636-7ca7-4b2c-80df-d59ed2c45bd6",
+							"name": "LiveLongTrades",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a829cb56-65cd-4e01-af92-5190acef68df",
+							"name": "LiveShortTrades",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "74317661-ae5e-4615-8864-7686cd5713c5",
+							"name": "LiveLastTradeDate",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "a8dc2218-333a-4337-bea5-eebb4f295e19",
+							"name": "LiveDaysTrading",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "0",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "13fbe541-d974-4be1-890f-c8a7856c2c8f",
+							"name": "LiveMetricsUpdatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "629d747e-fbba-48c5-be72-b57b05adffc0",
+							"name": "BacktestData",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "24d40d12-3a9d-43da-85f5-9efda24fed83",
+							"name": "BacktestEquityChart",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "6611abe4-5b8f-4c0a-baa3-3832f60bc0ce",
+							"name": "PseudoCode",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "ba440935-5f28-47ce-a304-f5c9d55780cf",
+							"name": "BacktestImportedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "486bdbda-9767-499f-b305-8d7b70545c17",
+							"name": "CreatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "75dffdce-d952-4fab-9d3e-21ca87f76d6f",
+							"name": "UpdatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"8e69e662-bf0a-459e-b8e4-c77896d8cbcf",
+						"00580ebe-b0e9-470f-bee4-7bee3a008a6a"
+					],
+					"keys": [
+						{
+							"id": "7c4385c2-b9bd-43cf-aa9e-dd9553d97dcd",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "b4d665ad-7eb8-4e99-933c-e22253f27780",
+									"colid": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240"
+								}
+							]
+						}
+					],
+					"indexes": [
+						{
+							"id": "a9c05a7e-3699-4cfb-8c53-505297bb03c9",
+							"unique": false,
+							"name": "idx_strategies_account",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						},
+						{
+							"id": "eb30b14c-7fe9-4567-b9dc-0603b3782e5d",
+							"unique": false,
+							"name": "idx_strategies_status",
+							"cols": [],
+							"sqlite": {
+								"expression": "",
+								"desc": ""
+							}
+						}
+					],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				},
+				"d04da671-825f-45b6-99e6-2fd852c27a19": {
+					"lines": [],
+					"embeddable": false,
+					"generate": true,
+					"generateCustomCode": true,
+					"id": "d04da671-825f-45b6-99e6-2fd852c27a19",
+					"name": "Portfolios",
+					"desc": "",
+					"cols": [
+						{
+							"id": "1957773a-73af-47e4-b987-d6617560e015",
+							"name": "PortfolioID",
+							"datatype": "INTEGER",
+							"param": "",
+							"pk": true,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": true
+							}
+						},
+						{
+							"id": "8a43af98-8fb5-4847-be08-ee66d6696e10",
+							"name": "PortfolioName",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": true,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "7d40615e-9479-41db-a1da-6e5d6f1e1961",
+							"name": "Description",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						},
+						{
+							"id": "3ab3de79-2cd2-4f6f-96d0-7fff5d0648af",
+							"name": "CreatedAt",
+							"datatype": "TEXT",
+							"param": "",
+							"pk": false,
+							"nn": false,
+							"comment": "",
+							"data": "",
+							"estimatedSize": "",
+							"defaultvalue": "",
+							"collation": "",
+							"fk": false,
+							"after": "",
+							"sqlite": {
+								"autoincrement": false
+							}
+						}
+					],
+					"relations": [
+						"2b2e81bb-42ac-4e7f-9331-39c6bf105bee"
+					],
+					"keys": [
+						{
+							"id": "8a159556-76bd-4456-9af3-e5d047a69b37",
+							"isPk": true,
+							"name": "Primary key",
+							"cols": [
+								{
+									"id": "249a4dd5-c42b-4d93-9555-1a9e60a65446",
+									"colid": "1957773a-73af-47e4-b987-d6617560e015"
+								}
+							]
+						}
+					],
+					"indexes": [],
+					"estimatedSize": "",
+					"sqlite": {
+						"withoutrowid": false,
+						"strict": false
+					},
+					"visible": true,
+					"customCode": ""
+				}
+			},
+			"relations": {
+				"8e69e662-bf0a-459e-b8e4-c77896d8cbcf": {
+					"id": "8e69e662-bf0a-459e-b8e4-c77896d8cbcf",
+					"type": "identifying",
+					"cols": [
+						{
+							"id": "f6265e84-e9dc-4611-ab78-be69fca17293",
+							"parentcol": "8a1d1b7f-18c1-4143-95c7-eb5cd41c2240",
+							"childcol": "15355e96-6adc-4864-9138-9a31f18b3cc3"
+						}
+					],
+					"child": "0aba6f35-3fdf-4a86-93ce-bfa4b98b782d",
+					"parent": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+					"c_mp": "false",
+					"c_mch": "false",
+					"c_ch": "many",
+					"c_p": "one",
+					"c_cp": "",
+					"c_cch": "",
+					"name": "Strategies_Trades",
+					"desc": "",
+					"parent_key": "7c4385c2-b9bd-43cf-aa9e-dd9553d97dcd",
+					"ri_pd": "No action",
+					"ri_pu": "No action",
+					"generate": true,
+					"generateCustomCode": true,
+					"customCode": ""
+				},
+				"2b2e81bb-42ac-4e7f-9331-39c6bf105bee": {
+					"id": "2b2e81bb-42ac-4e7f-9331-39c6bf105bee",
+					"type": "identifying",
+					"cols": [
+						{
+							"id": "31dc5b17-7f63-4482-ae3f-8d25433f1679",
+							"parentcol": "1957773a-73af-47e4-b987-d6617560e015",
+							"childcol": "be5fa4d1-c93b-4f8d-82e7-7fac023148e6"
+						}
+					],
+					"child": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+					"parent": "d04da671-825f-45b6-99e6-2fd852c27a19",
+					"c_mp": "false",
+					"c_mch": "false",
+					"c_ch": "many",
+					"c_p": "one",
+					"c_cp": "",
+					"c_cch": "",
+					"name": "Portfolios_Accounts",
+					"desc": "",
+					"parent_key": "8a159556-76bd-4456-9af3-e5d047a69b37",
+					"ri_pd": "No action",
+					"ri_pu": "No action",
+					"generate": true,
+					"generateCustomCode": true,
+					"customCode": ""
+				},
+				"00580ebe-b0e9-470f-bee4-7bee3a008a6a": {
+					"id": "00580ebe-b0e9-470f-bee4-7bee3a008a6a",
+					"type": "identifying",
+					"cols": [
+						{
+							"id": "2220ad4f-5cdd-414e-871c-4fc6df74a265",
+							"parentcol": "3edce3cc-45fd-4836-9a26-0d135e33642a",
+							"childcol": "af53fc9d-09c3-4efb-95a5-5cdce9870aca"
+						}
+					],
+					"child": "ff19adcd-f82f-41bd-ad34-fbbbd195518b",
+					"parent": "55017dfa-dd9c-4f4c-b26a-b3eac4f76580",
+					"c_mp": "false",
+					"c_mch": "false",
+					"c_ch": "many",
+					"c_p": "one",
+					"c_cp": "",
+					"c_cch": "",
+					"name": "Accounts_Strategies",
+					"desc": "",
+					"parent_key": "7e9236a8-d07b-40f8-88b1-dbb116a5a293",
+					"ri_pd": "No action",
+					"ri_pu": "No action",
+					"generate": true,
+					"generateCustomCode": true,
+					"customCode": ""
+				}
+			},
+			"otherObjects": {}
+		}
+	}
+}

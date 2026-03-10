@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% set active_page = 'dashboard' %}
+{% block title %}Dashboard — Portfolio Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Dashboard</h2>
+</div>
+
+<div class="summary-row">
+  <div class="summary-card">
+    <div class="label">Portfolios</div>
+    <div class="value blue">{{ portfolios|length }}</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Strategies</div>
+    <div class="value">{{ dashboard_strategy_count }}</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Total Net P&L</div>
+    <div class="value {{ 'green' if total_pnl > 0 else 'red' if total_pnl < 0 else 'muted' }}">
+      ${{ '{:,.2f}'.format(total_pnl) }}
+    </div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Total Trades</div>
+    <div class="value">{{ total_trades }}</div>
+  </div>
+  <div class="summary-card">
+    <div class="label">Overall Win Rate</div>
+    <div class="value amber">{{ '{:.1f}'.format(overall_win_rate) }}%</div>
+  </div>
+</div>
+
+{% if total_trades > 0 %}
+<div class="data-table-wrapper" style="padding:20px;">
+  <div class="chart-toggle">
+    <button class="chart-toggle-btn active" data-chart="equity">Equity Curve</button>
+    <button class="chart-toggle-btn" data-chart="weekly-wl">Weekly W/L</button>
+  </div>
+  <div id="equityChartGroup">
+    <div style="position:relative;height:350px;">
+      <canvas id="dashEquityCanvas"></canvas>
+    </div>
+    <div style="position:relative;height:130px;margin-top:8px;">
+      <canvas id="dashDrawdownCanvas"></canvas>
+    </div>
+  </div>
+  <div id="weeklyWLChartGroup" style="display:none;">
+    <div style="position:relative;height:490px;">
+      <canvas id="dashWeeklyWLCanvas"></canvas>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="data-table-wrapper">
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    <p>No trades yet</p>
+    <div class="hint">Import trade data to see the portfolio equity curve</div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+{% if total_trades > 0 %}
+(function() {
+  const chartFont = { family: "'JetBrains Mono', monospace", size: 10 };
+  const gridColor = 'rgba(255,255,255,0.06)';
+  const tickColor = 'rgba(255,255,255,0.3)';
+
+  // ── Equity + Drawdown charts ──
+  fetch(`/equity/combined?scope=all&include_retired=1`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data.trade_count) return;
+
+      const shortLabels = data.labels.map(l => {
+        if (!l) return '';
+        const parts = l.split(/[.\-\s/]/);
+        if (parts.length >= 3) {
+          const months = ['', 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          const m = parseInt(parts[1]) || 0;
+          return (months[m] || parts[1]) + ' ' + parseInt(parts[2]);
+        }
+        return l;
+      });
+
+      const eqCtx = document.getElementById('dashEquityCanvas').getContext('2d');
+      const gradient = eqCtx.createLinearGradient(0, 0, 0, 350);
+      gradient.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
+      gradient.addColorStop(1, 'rgba(56, 189, 248, 0.02)');
+
+      new Chart(eqCtx, {
+        type: 'line',
+        data: {
+          labels: shortLabels,
+          datasets: [{
+            label: 'Equity ($)',
+            data: data.equity,
+            borderColor: 'rgba(56, 189, 248, 0.9)',
+            backgroundColor: gradient,
+            borderWidth: 1.5,
+            fill: true,
+            pointRadius: data.trade_count <= 50 ? 2 : 0,
+            pointHoverRadius: 4,
+            pointBackgroundColor: 'rgba(56, 189, 248, 1)',
+            tension: 0.1,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(15,23,42,0.95)',
+              borderColor: 'rgba(255,255,255,0.1)',
+              borderWidth: 1,
+              titleFont: chartFont,
+              bodyFont: chartFont,
+              callbacks: { label: ctx => `Equity: $${ctx.parsed.y.toFixed(2)}` }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: gridColor },
+              ticks: { color: tickColor, font: chartFont, maxTicksLimit: 14, maxRotation: 0 },
+            },
+            y: {
+              grid: { color: gridColor },
+              ticks: { color: tickColor, font: chartFont, callback: v => '$' + v.toLocaleString() },
+              title: { display: true, text: 'Equity ($)', color: tickColor, font: chartFont }
+            }
+          }
+        }
+      });
+
+      const ddCtx = document.getElementById('dashDrawdownCanvas').getContext('2d');
+      new Chart(ddCtx, {
+        type: 'bar',
+        data: {
+          labels: shortLabels,
+          datasets: [{
+            label: 'Drawdown ($)',
+            data: data.drawdown,
+            backgroundColor: 'rgba(248, 113, 113, 0.5)',
+            borderColor: 'rgba(248, 113, 113, 0.7)',
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(15,23,42,0.95)',
+              borderColor: 'rgba(255,255,255,0.1)',
+              borderWidth: 1,
+              titleFont: chartFont,
+              bodyFont: chartFont,
+              callbacks: { label: ctx => `Drawdown: $${ctx.parsed.y.toFixed(2)}` }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: gridColor },
+              ticks: { display: false },
+            },
+            y: {
+              grid: { color: gridColor },
+              ticks: { color: tickColor, font: chartFont, callback: v => '$' + v.toLocaleString() },
+              title: { display: true, text: 'Drawdown ($)', color: tickColor, font: chartFont }
+            }
+          }
+        }
+      });
+    });
+
+  // ── Chart toggle logic ──
+  let weeklyWLData = null;
+  let weeklyWLChart = null;
+
+  function activateChart(chart) {
+    document.querySelectorAll('.chart-toggle-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.chart-toggle-btn[data-chart="${chart}"]`).classList.add('active');
+
+    document.getElementById('equityChartGroup').style.display = chart === 'equity' ? '' : 'none';
+    document.getElementById('weeklyWLChartGroup').style.display = chart === 'weekly-wl' ? '' : 'none';
+
+    localStorage.setItem('dashboardChart', chart);
+
+    if (chart === 'weekly-wl' && !weeklyWLData) {
+      fetch('/equity/weekly-wl')
+        .then(res => res.json())
+        .then(data => {
+          weeklyWLData = data;
+          renderWeeklyWL(data);
+        });
+    }
+  }
+
+  document.querySelectorAll('.chart-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function() { activateChart(this.dataset.chart); });
+  });
+
+  // Restore saved chart selection
+  const saved = localStorage.getItem('dashboardChart');
+  if (saved && saved !== 'equity') activateChart(saved);
+
+  function renderWeeklyWL(data) {
+    if (!data.weeks.length) return;
+    const ctx = document.getElementById('dashWeeklyWLCanvas').getContext('2d');
+    weeklyWLChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: data.weeks.map(w => 'W' + w),
+        datasets: [
+          {
+            label: 'Wins',
+            data: data.wins,
+            backgroundColor: 'rgba(34, 197, 94, 0.7)',
+            borderColor: 'rgba(34, 197, 94, 0.9)',
+            borderWidth: 1,
+          },
+          {
+            label: 'Losses',
+            data: data.losses,
+            backgroundColor: 'rgba(248, 113, 113, 0.7)',
+            borderColor: 'rgba(248, 113, 113, 0.9)',
+            borderWidth: 1,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            display: true,
+            labels: { color: tickColor, font: chartFont }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(15,23,42,0.95)',
+            borderColor: 'rgba(255,255,255,0.1)',
+            borderWidth: 1,
+            titleFont: chartFont,
+            bodyFont: chartFont,
+            callbacks: {
+              label: function(ctx) {
+                const val = Math.abs(ctx.parsed.y);
+                const i = ctx.dataIndex;
+                if (ctx.datasetIndex === 0) {
+                  const pnl = weeklyWLData.win_pnl[i];
+                  return 'Wins: ' + val + ' ($' + pnl.toFixed(2) + ')';
+                } else {
+                  const pnl = weeklyWLData.loss_pnl[i];
+                  return 'Losses: ' + val + ' (-$' + Math.abs(pnl).toFixed(2) + ')';
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: gridColor },
+            ticks: { color: tickColor, font: chartFont, maxRotation: 0 },
+            stacked: true,
+          },
+          y: {
+            grid: { color: gridColor },
+            ticks: {
+              color: tickColor,
+              font: chartFont,
+              callback: v => Math.abs(v)
+            },
+            title: { display: true, text: 'Trade Count', color: tickColor, font: chartFont }
+          }
+        }
+      }
+    });
+  }
+})();
+{% endif %}
+</script>
+{% endblock %}

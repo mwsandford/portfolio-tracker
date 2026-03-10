@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Portfolio Tracker{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <h1><span>PT</span> Portfolio Tracker</h1>
+        <div class="version">v0.1.0</div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Overview</div>
+        <a class="nav-item {{ 'active' if active_page == 'dashboard' }}" href="{{ url_for('dashboard') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Manage</div>
+        <a class="nav-item {{ 'active' if active_page == 'portfolios' }}" href="{{ url_for('portfolios') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Portfolios
+          {% if portfolio_count is defined and portfolio_count > 0 %}
+          <span class="nav-badge">{{ portfolio_count }}</span>
+          {% endif %}
+        </a>
+        <a class="nav-item {{ 'active' if active_page == 'accounts' }}" href="{{ url_for('accounts') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Accounts
+          {% if account_count is defined and account_count > 0 %}
+          <span class="nav-badge">{{ account_count }}</span>
+          {% endif %}
+        </a>
+        <a class="nav-item {{ 'active' if active_page == 'strategies' }}" href="{{ url_for('strategies') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Strategies
+          {% if strategy_count is defined and strategy_count > 0 %}
+          <span class="nav-badge">{{ strategy_count }}</span>
+          {% endif %}
+        </a>
+        <a class="nav-item {{ 'active' if active_page == 'retired' }}" href="{{ url_for('retired') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Retired
+          {% if retired_count is defined and retired_count > 0 %}
+          <span class="nav-badge">{{ retired_count }}</span>
+          {% endif %}
+        </a>
+        <a class="nav-item {{ 'active' if active_page == 'complexity' }}" href="{{ url_for('complexity_analysis') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+          Complexity
+        </a>
+        <a class="nav-item {{ 'active' if active_page == 'notes' }}" href="{{ url_for('notes_page') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Notes
+          {% if note_count is defined and note_count > 0 %}
+          <span class="nav-badge">{{ note_count }}</span>
+          {% endif %}
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Data</div>
+        <a class="nav-item {{ 'active' if active_page == 'trades' }}" href="{{ url_for('trades') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Trades
+          {% if trade_count is defined and trade_count > 0 %}
+          <span class="nav-badge">{{ trade_count }}</span>
+          {% endif %}
+        </a>
+        <a class="nav-item {{ 'active' if active_page == 'margins' }}" href="{{ url_for('margins') }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/><path d="M6 14h2"/><path d="M12 14h6"/></svg>
+          Margins
+          {% if margin_count is defined and margin_count > 0 %}
+          <span class="nav-badge">{{ margin_count }}</span>
+          {% endif %}
+        </a>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash-msg flash-{{ category }}" onclick="this.remove()">
+              {% if category == 'success' %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              {% elif category == 'error' %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              {% endif %}
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

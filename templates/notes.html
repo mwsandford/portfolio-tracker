@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+{% set active_page = 'notes' %}
+{% block title %}Notes — Portfolio Tracker{% endblock %}
+
+{% block head %}
+<!-- Quill Rich Text Editor -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+<style>
+  .notes-layout {
+    display: flex;
+    gap: 16px;
+    height: calc(100vh - 140px);
+    min-height: 400px;
+  }
+
+  /* Left panel: note list */
+  .notes-sidebar {
+    width: 280px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .notes-sidebar-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .notes-sidebar-header h3 {
+    margin: 0;
+    font-size: 14px;
+  }
+  .notes-list {
+    flex: 1;
+    overflow-y: auto;
+  }
+  .note-item {
+    display: block;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background 0.15s;
+  }
+  .note-item:hover {
+    background: rgba(255,255,255,0.04);
+  }
+  .note-item.active {
+    background: rgba(59, 130, 246, 0.12);
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 13px;
+  }
+  .note-item-title {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .note-item-date {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Right panel: detail/editor */
+  .notes-detail {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .notes-detail-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .notes-detail-header input {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 600;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    outline: none;
+    padding: 4px 0;
+  }
+  .notes-detail-header input::placeholder {
+    color: var(--text-muted);
+  }
+  .notes-detail-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .notes-detail-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* Quill dark theme overrides */
+  .ql-toolbar.ql-snow {
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    background: rgba(255,255,255,0.02);
+  }
+  .ql-container.ql-snow {
+    border: none !important;
+    flex: 1;
+    overflow-y: auto;
+    font-size: 14px;
+  }
+  .ql-editor {
+    min-height: 200px;
+    color: var(--text-primary);
+    line-height: 1.7;
+  }
+  .ql-editor.ql-blank::before {
+    color: var(--text-muted);
+    font-style: normal;
+  }
+  .ql-snow .ql-stroke { stroke: var(--text-secondary); }
+  .ql-snow .ql-fill { fill: var(--text-secondary); }
+  .ql-snow .ql-picker { color: var(--text-secondary); }
+  .ql-snow .ql-picker-options {
+    background: var(--bg-card);
+    border-color: var(--border);
+  }
+  .ql-snow .ql-picker-label:hover,
+  .ql-snow button:hover { color: var(--accent-cyan) !important; }
+  .ql-snow button:hover .ql-stroke { stroke: var(--accent-cyan) !important; }
+  .ql-snow button:hover .ql-fill { fill: var(--accent-cyan) !important; }
+  .ql-snow button.ql-active .ql-stroke { stroke: var(--accent-cyan) !important; }
+  .ql-snow button.ql-active .ql-fill { fill: var(--accent-cyan) !important; }
+  .ql-snow .ql-active { color: var(--accent-cyan) !important; }
+  .ql-editor h1, .ql-editor h2, .ql-editor h3 { color: var(--text-primary); }
+  .ql-editor a { color: var(--accent-cyan); }
+  .ql-editor blockquote {
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 12px;
+    color: var(--text-secondary);
+  }
+  .ql-editor pre.ql-syntax {
+    background: rgba(0,0,0,0.3);
+    color: var(--accent-green);
+    border-radius: 4px;
+    padding: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .ql-editor code {
+    background: rgba(0,0,0,0.3);
+    color: var(--accent-cyan);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+  }
+
+  /* Empty states */
+  .notes-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: var(--text-muted);
+    font-size: 14px;
+    text-align: center;
+    padding: 40px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Notes</h2>
+  <div class="page-header-actions">
+    <button class="btn btn-primary" onclick="openModal('add-note')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Note
+    </button>
+  </div>
+</div>
+
+<div class="notes-layout">
+  <!-- Left: Note List -->
+  <div class="notes-sidebar">
+    <div class="notes-sidebar-header">
+      <h3>All Notes</h3>
+      <span class="muted" style="font-size: 12px;">{{ notes|length }}</span>
+    </div>
+    <div class="notes-list">
+      {% if notes %}
+        {% for n in notes %}
+        <a href="{{ url_for('notes_page', id=n.NoteID) }}"
+           class="note-item {{ 'active' if selected_note and selected_note.NoteID == n.NoteID }}">
+          <div class="note-item-title">{{ n.Title }}</div>
+          <div class="note-item-date">{{ n.UpdatedAt[:16] if n.UpdatedAt else '' }}</div>
+        </a>
+        {% endfor %}
+      {% else %}
+        <div class="notes-empty" style="padding: 20px;">
+          <span>No notes yet</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Right: Note Detail -->
+  <div class="notes-detail">
+    {% if selected_note %}
+    <!-- Delete form must be OUTSIDE the edit form -->
+    <form id="delete-note-{{ selected_note.NoteID }}" action="{{ url_for('delete_note', note_id=selected_note.NoteID) }}" method="POST" style="display:none;"></form>
+
+    <form action="{{ url_for('edit_note', note_id=selected_note.NoteID) }}" method="POST" id="editNoteForm">
+      <input type="hidden" name="content" id="noteContentField">
+      <div class="notes-detail-header">
+        <input type="text" name="title" value="{{ selected_note.Title }}" placeholder="Note title..." required>
+        <div style="display: flex; gap: 6px;">
+          <button type="submit" class="btn btn-primary" style="padding: 5px 14px; font-size: 12px;">Save</button>
+          <button type="button" class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px; color: var(--accent-red);"
+                  onclick="confirmDelete('delete-note-{{ selected_note.NoteID }}', '{{ selected_note.Title }}')">Delete</button>
+        </div>
+      </div>
+      <div class="notes-detail-body">
+        <div id="quill-editor">{{ selected_note.Content|safe if selected_note.Content else '' }}</div>
+      </div>
+      <div class="notes-detail-footer">
+        <span>Created: {{ selected_note.CreatedAt[:16] if selected_note.CreatedAt else '—' }}</span>
+        <span>Updated: {{ selected_note.UpdatedAt[:16] if selected_note.UpdatedAt else '—' }}</span>
+      </div>
+    </form>
+    {% else %}
+    <div class="notes-empty">
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="width:48px;height:48px;margin-bottom:12px;opacity:0.3;">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <p>Click <strong>Add Note</strong> to get started</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Add Note Modal -->
+<div class="modal-overlay" id="modal-add-note">
+  <div class="modal" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3>Add Note</h3>
+      <button class="modal-close" onclick="closeModal('add-note')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form action="{{ url_for('add_note') }}" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" name="title" placeholder="e.g. Strategy Development Checklist" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('add-note')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Note</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script>
+{% if selected_note %}
+(function() {
+  const quill = new Quill('#quill-editor', {
+    theme: 'snow',
+    placeholder: 'Start writing...',
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['blockquote', 'code-block'],
+        ['link'],
+        ['clean']
+      ]
+    }
+  });
+
+  // Sync Quill content to hidden form field on submit
+  const form = document.getElementById('editNoteForm');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('noteContentField').value = quill.root.innerHTML;
+    form.submit();
+  });
+})();
+{% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+{% set active_page = 'accounts' %}
+{% block title %}Accounts — Portfolio Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Accounts</h2>
+  <div class="page-header-actions">
+    <button class="btn btn-primary" onclick="openModal('add-account')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Account
+    </button>
+  </div>
+</div>
+
+{% if account_data %}
+<div class="data-table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th data-sort="string">Account</th>
+        <th data-sort="number">Login</th>
+        <th data-sort="string">Broker</th>
+        <th data-sort="string">Portfolio</th>
+        <th class="right" data-sort="currency">Initial Balance</th>
+        <th data-sort="string">Currency</th>
+        <th class="center" data-sort="number">Strategies</th>
+        <th class="center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ad in account_data %}
+      {% set a = ad.account %}
+      <tr>
+        <td><strong>{{ a.AccountName or ('Account ' ~ a.AccountLogin) }}</strong></td>
+        <td class="mono muted">{{ a.AccountLogin }}</td>
+        <td class="muted">{{ a.Broker or '—' }}</td>
+        <td class="muted">{{ a.portfolio.PortfolioName if a.portfolio else '—' }}</td>
+        <td class="right mono">${{ '{:,.2f}'.format(a.InitialBalance or 0) }}</td>
+        <td class="mono muted">{{ a.Currency or 'AUD' }}</td>
+        <td class="center mono">{{ ad.strategy_count }}</td>
+        <td class="center">
+          <div class="action-btns">
+            <button class="action-btn cyan" onclick="loadAccountEquity({{ a.AccountID }}, '{{ a.AccountName or a.AccountLogin }}')">Equity</button>
+            <button class="action-btn blue" onclick="openEditAccount({{ a.AccountID }}, '{{ a.AccountName or '' }}', {{ a.AccountLogin }}, '{{ a.Broker or '' }}', {{ a.InitialBalance or 0 }}, '{{ a.Currency or 'AUD' }}', {{ a.PortfolioID or 'null' }})">Edit</button>
+            <button class="action-btn red" onclick="confirmDelete('delete-account-{{ a.AccountID }}', '{{ a.AccountName or a.AccountLogin }}')">Delete</button>
+            <form id="delete-account-{{ a.AccountID }}" action="{{ url_for('delete_account', account_id=a.AccountID) }}" method="POST" style="display:none;"></form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="data-table-wrapper">
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <p>No accounts yet</p>
+    <div class="hint">Add a trading account to start tracking strategies</div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Account Equity Chart (inline, below table) -->
+<div id="accountEquitySection" style="display:none;margin-top:16px;">
+  <div class="data-table-wrapper" style="padding:20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <h3 id="accountEquityTitle" style="margin:0;font-size:16px;">Account Equity</h3>
+      <button class="btn btn-secondary" onclick="hideAccountEquity()" style="padding:4px 12px;font-size:12px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Close
+      </button>
+    </div>
+    <div id="accountEquityStats" style="margin-bottom:8px;"></div>
+    <div style="position:relative;height:300px;">
+      <canvas id="acctEquityCanvas"></canvas>
+    </div>
+    <div style="position:relative;height:110px;margin-top:8px;">
+      <canvas id="acctDrawdownCanvas"></canvas>
+    </div>
+    <div id="acctEquityNoData" style="display:none;text-align:center;padding:30px;color:var(--text-muted);">
+      No trades recorded for this account yet.
+    </div>
+  </div>
+</div>
+
+<!-- Add Account Modal -->
+<div class="modal-overlay" id="modal-add-account">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add Account</h3>
+      <button class="modal-close" onclick="closeModal('add-account')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form action="{{ url_for('add_account') }}" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Account Name</label>
+          <input type="text" name="account_name" placeholder="e.g. Small Account #1">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Account Login</label>
+            <input type="number" name="account_login" placeholder="e.g. 5012847" required>
+          </div>
+          <div class="form-group">
+            <label>Broker</label>
+            <input type="text" name="broker" placeholder="e.g. Pepperstone" value="Pepperstone">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Initial Balance</label>
+            <input type="number" name="initial_balance" placeholder="e.g. 2000" step="100">
+          </div>
+          <div class="form-group">
+            <label>Currency</label>
+            <select name="currency">
+              <option value="AUD" selected>AUD</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Portfolio</label>
+          <select name="portfolio_id">
+            <option value="">— Select Portfolio —</option>
+            {% for p in portfolios %}
+            <option value="{{ p.PortfolioID }}">{{ p.PortfolioName }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('add-account')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add Account</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Account Modal -->
+<div class="modal-overlay" id="modal-edit-account">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Edit Account</h3>
+      <button class="modal-close" onclick="closeModal('edit-account')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form id="editAccountForm" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Account Name</label>
+          <input type="text" name="account_name" id="edit_account_name">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Broker</label>
+            <input type="text" name="broker" id="edit_account_broker">
+          </div>
+          <div class="form-group">
+            <label>Initial Balance</label>
+            <input type="number" name="initial_balance" id="edit_account_balance" step="100">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Currency</label>
+            <select name="currency" id="edit_account_currency">
+              <option value="AUD">AUD</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Portfolio</label>
+            <select name="portfolio_id" id="edit_account_portfolio">
+              <option value="">— No Portfolio —</option>
+              {% for p in portfolios %}
+              <option value="{{ p.PortfolioID }}">{{ p.PortfolioName }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('edit-account')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function openEditAccount(id, name, login, broker, balance, currency, portfolioId) {
+  document.getElementById('editAccountForm').action = `/accounts/${id}/edit`;
+  document.getElementById('edit_account_name').value = name;
+  document.getElementById('edit_account_broker').value = broker;
+  document.getElementById('edit_account_balance').value = balance;
+  document.getElementById('edit_account_currency').value = currency;
+  document.getElementById('edit_account_portfolio').value = portfolioId || '';
+  openModal('edit-account');
+}
+
+let acctEquityChart = null;
+let acctDrawdownChart = null;
+
+function hideAccountEquity() {
+  document.getElementById('accountEquitySection').style.display = 'none';
+}
+
+function loadAccountEquity(accountId, accountName) {
+  const section = document.getElementById('accountEquitySection');
+  section.style.display = 'block';
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  document.getElementById('accountEquityTitle').textContent = accountName + ' — Equity';
+  document.getElementById('accountEquityStats').innerHTML = '';
+  document.getElementById('acctEquityNoData').style.display = 'none';
+
+  // Destroy previous charts
+  if (acctEquityChart) { acctEquityChart.destroy(); acctEquityChart = null; }
+  if (acctDrawdownChart) { acctDrawdownChart.destroy(); acctDrawdownChart = null; }
+
+  fetch(`/equity/combined?scope=account&account_id=${accountId}`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data.trade_count) {
+        document.getElementById('acctEquityNoData').style.display = 'block';
+        return;
+      }
+
+      // Stats bar
+      const pnlCol = data.net_profit >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+      let statsHtml = `<div style="display:flex;gap:24px;padding:4px 0;font-size:13px;">`;
+      statsHtml += `<div><span style="color:var(--text-muted);">Trades:</span> <strong>${data.trade_count}</strong></div>`;
+      statsHtml += `<div><span style="color:var(--text-muted);">Net P&L:</span> <strong style="color:${pnlCol};">$${data.net_profit.toFixed(2)}</strong></div>`;
+      statsHtml += `<div><span style="color:var(--text-muted);">Max DD:</span> <strong style="color:var(--accent-red);">$${data.max_dd.toFixed(2)}</strong></div>`;
+      statsHtml += `</div>`;
+      document.getElementById('accountEquityStats').innerHTML = statsHtml;
+
+      const shortLabels = data.labels.map(l => {
+        if (!l) return '';
+        const parts = l.split(/[.\-\s/]/);
+        if (parts.length >= 3) {
+          const months = ['', 'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          const m = parseInt(parts[1]) || 0;
+          return (months[m] || parts[1]) + ' ' + parseInt(parts[2]);
+        }
+        return l;
+      });
+
+      const chartFont = { family: "'JetBrains Mono', monospace", size: 10 };
+      const gridColor = 'rgba(255,255,255,0.06)';
+      const tickColor = 'rgba(255,255,255,0.3)';
+
+      // Equity chart
+      const eqCtx = document.getElementById('acctEquityCanvas').getContext('2d');
+      const gradient = eqCtx.createLinearGradient(0, 0, 0, 300);
+      gradient.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
+      gradient.addColorStop(1, 'rgba(56, 189, 248, 0.02)');
+
+      acctEquityChart = new Chart(eqCtx, {
+        type: 'line',
+        data: {
+          labels: shortLabels,
+          datasets: [{
+            label: 'Equity ($)',
+            data: data.equity,
+            borderColor: 'rgba(56, 189, 248, 0.9)',
+            backgroundColor: gradient,
+            borderWidth: 1.5,
+            fill: true,
+            pointRadius: data.trade_count <= 50 ? 2 : 0,
+            pointHoverRadius: 4,
+            pointBackgroundColor: 'rgba(56, 189, 248, 1)',
+            tension: 0.1,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(15,23,42,0.95)',
+              borderColor: 'rgba(255,255,255,0.1)',
+              borderWidth: 1,
+              titleFont: chartFont,
+              bodyFont: chartFont,
+              callbacks: { label: ctx => `Equity: $${ctx.parsed.y.toFixed(2)}` }
+            }
+          },
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { color: tickColor, font: chartFont, maxTicksLimit: 12, maxRotation: 0 } },
+            y: {
+              grid: { color: gridColor },
+              ticks: { color: tickColor, font: chartFont, callback: v => '$' + v.toLocaleString() },
+              title: { display: true, text: 'Equity ($)', color: tickColor, font: chartFont }
+            }
+          }
+        }
+      });
+
+      // Drawdown chart
+      const ddCtx = document.getElementById('acctDrawdownCanvas').getContext('2d');
+      acctDrawdownChart = new Chart(ddCtx, {
+        type: 'bar',
+        data: {
+          labels: shortLabels,
+          datasets: [{
+            label: 'Drawdown ($)',
+            data: data.drawdown,
+            backgroundColor: 'rgba(248, 113, 113, 0.5)',
+            borderColor: 'rgba(248, 113, 113, 0.7)',
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(15,23,42,0.95)',
+              borderColor: 'rgba(255,255,255,0.1)',
+              borderWidth: 1,
+              titleFont: chartFont,
+              bodyFont: chartFont,
+              callbacks: { label: ctx => `Drawdown: $${ctx.parsed.y.toFixed(2)}` }
+            }
+          },
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { display: false } },
+            y: {
+              grid: { color: gridColor },
+              ticks: { color: tickColor, font: chartFont, callback: v => '$' + v.toLocaleString() },
+              title: { display: true, text: 'Drawdown ($)', color: tickColor, font: chartFont }
+            }
+          }
+        }
+      });
+    });
+}
+</script>
+{% endblock %}

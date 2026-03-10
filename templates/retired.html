@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+{% from "pagination.html" import render_pagination %}
+{% set active_page = 'retired' %}
+{% block title %}Retired Strategies — Portfolio Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Retired Strategies</h2>
+</div>
+
+{% if strategies %}
+<div class="data-table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th data-sort="string">Strategy</th>
+        <th>Style</th>
+        <th>Risk Management</th>
+        <th data-sort="string">Account</th>
+        <th data-sort="date">Start Date</th>
+        <th class="right" data-sort="currency">Final P&L</th>
+        <th class="right" data-sort="number">Trades</th>
+        <th class="right" data-sort="percent">Win%</th>
+        <th class="right" data-sort="number">PF</th>
+        <th data-sort="string">Reason</th>
+        <th class="center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in strategies %}
+      <tr>
+        <td class="mono muted">{{ loop.index }}</td>
+        <td>
+          <div class="strategy-name-cell">
+            <span class="strategy-display-name">{{ s.DisplayName or s.StrategyName }}</span>
+            {% if s.DisplayName %}
+            <span class="strategy-full-name">{{ s.StrategyName }}</span>
+            {% endif %}
+          </div>
+        </td>
+        <td>
+          <div class="strategy-tags">
+            {% if s.Style %}
+              {% if 'trend' in s.Style|lower %}
+                <span class="tag tag-trend">Trend</span>
+              {% elif 'mean' in s.Style|lower or 'reversion' in s.Style|lower %}
+                <span class="tag tag-mr">Mean Rev</span>
+              {% elif 'breakout' in s.Style|lower %}
+                <span class="tag tag-breakout">Breakout</span>
+              {% elif 'momentum' in s.Style|lower %}
+                <span class="tag tag-momentum">Momentum</span>
+              {% else %}
+                <span class="tag tag-trend">{{ s.Style }}</span>
+              {% endif %}
+            {% endif %}
+            {% if s.Direction %}
+              {% if 'long' in s.Direction|lower and 'short' not in s.Direction|lower %}
+                <span class="tag tag-long">Long</span>
+              {% elif 'short' in s.Direction|lower and 'long' not in s.Direction|lower %}
+                <span class="tag tag-short">Short</span>
+              {% else %}
+                <span class="tag tag-both">Both</span>
+              {% endif %}
+            {% endif %}
+            {% set profile = s.BacktestData|strategy_profile %}
+            {% if profile.get('entry_type') %}
+              <span class="tag tag-entry">{{ profile.entry_type }} Order</span>
+            {% endif %}
+          </div>
+        </td>
+        <td>
+          <div class="strategy-tags">
+            {% set profile = s.BacktestData|strategy_profile %}
+            {% if profile.get('trailing_stop') %}
+              <span class="tag tag-risk-ts">Trailing Stop</span>
+            {% endif %}
+            {% if profile.get('move_sl_be') %}
+              <span class="tag tag-risk-ts">Move SL to BE</span>
+            {% endif %}
+            {% if profile.get('profit_target') %}
+              <span class="tag tag-risk-ts">Profit Target</span>
+            {% endif %}
+            {% if profile.get('has_exit_signals') %}
+              <span class="tag tag-risk-ts">Exit Signals</span>
+            {% endif %}
+            {% if profile.get('exit_after_bars') %}
+              <span class="tag tag-risk-ov">Exit After {{ profile.exit_after_bars }} bars</span>
+            {% endif %}
+            {% if profile.get('order_valid_bars') %}
+              <span class="tag tag-risk-ov">Valid {{ profile.order_valid_bars }} bars</span>
+            {% endif %}
+          </div>
+        </td>
+        <td class="muted">{{ s.account.AccountName if s.account else '—' }}</td>
+        <td class="mono muted">{{ s.StartDate or '—' }}</td>
+        <td class="right mono {{ 'green' if (s.LiveNetProfit or 0) >= 0 else 'red' }}">
+          ${{ '{:,.2f}'.format(s.LiveNetProfit or 0) }}
+        </td>
+        <td class="right mono">{{ s.LiveTotalTrades or 0 }}</td>
+        <td class="right mono">{{ '{:.1f}'.format(s.LiveWinRate or 0) }}%</td>
+        <td class="right mono">{{ '{:.2f}'.format(s.LiveProfitFactor or 0) }}</td>
+        <td class="retired-reason">{{ s.RetiredReason or '' }}</td>
+        <td class="center">
+          <div class="action-btns">
+            {% if s.BacktestData %}
+            <button class="action-btn green" onclick="openBacktest({{ s.StrategyID }}, '{{ s.StrategyName }}')">Backtest</button>
+            {% endif %}
+            <button class="action-btn blue" onclick="openEditRetired({{ s.StrategyID }}, '{{ s.StrategyName }}', `{{ s.RetiredReason|default('', true)|e }}`)">Edit</button>
+            <button class="action-btn green" onclick="confirmReactivate('reactivate-{{ s.StrategyID }}', '{{ s.StrategyName }}')">Reactivate</button>
+            <button class="action-btn red" onclick="confirmDelete('delete-strategy-{{ s.StrategyID }}', '{{ s.StrategyName }}')">Delete</button>
+            <form id="reactivate-{{ s.StrategyID }}" action="{{ url_for('reactivate_strategy', strategy_id=s.StrategyID) }}" method="POST" style="display:none;"></form>
+            <form id="delete-strategy-{{ s.StrategyID }}" action="{{ url_for('delete_strategy', strategy_id=s.StrategyID) }}" method="POST" style="display:none;"></form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{{ render_pagination(pagination) }}
+{% else %}
+    <div class="hint">Strategies you retire will appear here</div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Backtest Overview Modal -->
+<div class="modal-overlay" id="modal-backtest">
+  <div class="modal" style="width: 960px;">
+    <div class="modal-header">
+      <h3 id="backtestTitle">Backtest Overview</h3>
+      <button class="modal-close" onclick="closeModal('backtest')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" style="padding: 18px;" id="backtestBody">
+      <span style="color:var(--text-muted)">Loading...</span>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('backtest')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Retired Strategy Modal -->
+<div class="modal-overlay" id="modal-edit-retired">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="editRetiredTitle">Edit Retired Strategy</h3>
+      <button class="modal-close" onclick="closeModal('edit-retired')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form id="editRetiredForm" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Reason for Retiring</label>
+          <textarea name="retired_reason" id="edit_retired_reason" rows="3" placeholder="e.g. Underperforming in live, high drawdown, strategy decay..." style="resize:vertical;"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('edit-retired')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function openEditRetired(id, name, reason) {
+  document.getElementById('editRetiredTitle').textContent = name;
+  document.getElementById('editRetiredForm').action = `/retired/${id}/edit`;
+  document.getElementById('edit_retired_reason').value = reason;
+  openModal('edit-retired');
+}
+
+function confirmReactivate(formId, name) {
+  if (confirm(`Reactivate "${name}"? It will be moved back to running strategies.`)) {
+    document.getElementById(formId).submit();
+  }
+}
+
+function openBacktest(strategyId, strategyName) {
+  document.getElementById('backtestTitle').textContent = strategyName + ' — Backtest';
+  document.getElementById('backtestBody').innerHTML = '<span style="color:var(--text-muted)">Loading...</span>';
+  openModal('backtest');
+
+  fetch(`/strategies/${strategyId}/backtest`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('backtestBody').innerHTML = renderBacktest(data);
+    })
+    .catch(err => {
+      document.getElementById('backtestBody').innerHTML = '<span style="color:var(--loss-red)">Error: ' + err.message + '</span>';
+    });
+}
+
+function renderBacktest(data) {
+  const ov = data.overview || {};
+  const rk = data.ranking || {};
+  const sp = data.strategy_profile || {};
+  const pf = data.portfolio || {};
+  let html = '';
+
+  if (data.equity_chart) {
+    html += `<div class="bt-section"><img src="${data.equity_chart}" style="width:100%; border-radius:6px; border:1px solid var(--border);" alt="Equity Curve"></div>`;
+  }
+
+  html += '<div class="bt-tags">';
+  if (sp.direction) html += `<span class="tag tag-both">${sp.direction}</span>`;
+  if (sp.style) html += `<span class="tag tag-trend">${sp.style}</span>`;
+  if (sp.entry_type) html += `<span class="tag" style="background:rgba(139,92,246,0.15);color:#c084fc;">${sp.entry_type} Order</span>`;
+  if (pf.decision) {
+    const cls = pf.decision === 'KEEP' ? 'background:rgba(16,185,129,0.15);color:#34d399' : 'background:rgba(239,68,68,0.15);color:#f87171';
+    html += `<span class="tag" style="${cls}">${pf.decision}</span>`;
+  }
+  if (rk.composite_score) html += `<span class="tag" style="background:rgba(59,130,246,0.15);color:#60a5fa;">Score: ${rk.composite_score.toFixed(3)}</span>`;
+  html += '</div>';
+
+  html += '<div class="bt-grid">';
+  html += btMetric('Net Profit', fmtDollar(ov.total_profit), ov.total_profit >= 0);
+  html += btMetric('Profit Factor', fmtNum(ov.profit_factor));
+  html += btMetric('Sharpe Ratio', fmtNum(ov.sharpe));
+  html += btMetric('Recovery', fmtNum(ov.recovery_factor));
+  html += btMetric('Ret/DD', fmtNum(ov.ret_dd));
+  html += btMetric('MC95 Ret/DD', fmtNum(rk.mc95_ret_dd));
+  html += btMetric('Max DD ($)', fmtDollar(ov.dd_dollar));
+  html += btMetric('Max DD (%)', fmtPct(ov.dd_pct));
+  html += btMetric('LR Correlation', fmtNum(ov.lr_corr));
+  html += btMetric('Total Trades', fmtInt(ov.total_trades));
+  html += btMetric('Win Rate', fmtPct(ov.win_rate));
+  html += btMetric('W/L Ratio', fmtNum(ov.wl_ratio));
+  html += '</div>';
+
+  html += '<div class="bt-details">';
+  html += '<div class="bt-col">';
+  html += '<div class="bt-col-title">Trade Statistics</div>';
+  html += btRow('Expected Payoff', fmtColorDollar(ov.expected_payoff));
+  html += btRow('Avg Win', fmtColorDollar(ov.avg_win));
+  html += btRow('Avg Loss', fmtColorDollar(ov.avg_loss));
+  html += btRow('Largest Win', fmtColorDollar(ov.largest_win));
+  html += btRow('Largest Loss', fmtColorDollar(ov.largest_loss));
+  html += btRow('Payout Ratio', fmtNum(ov.payout_ratio));
+  html += btRow('Long Trades', `${fmtInt(ov.long_trades)} (${fmtPct(ov.long_win_pct)} win)`);
+  html += btRow('Short Trades', `${fmtInt(ov.short_trades)} (${fmtPct(ov.short_win_pct)} win)`);
+  html += btRow('Max Consec Wins', fmtColorInt(ov.max_consec_wins, true));
+  html += btRow('Max Consec Losses', fmtColorInt(ov.max_consec_losses, false));
+  html += btRow('Avg Consec Wins', fmtColor(fmtNum(ov.avg_consec_wins), true));
+  html += btRow('Avg Consec Losses', fmtColor(fmtNum(ov.avg_consec_losses), false));
+  html += '</div>';
+
+  html += '<div class="bt-col">';
+  html += '<div class="bt-col-title">Performance</div>';
+  html += btRow('Gross Profit', fmtColorDollar(ov.gross_profit));
+  html += btRow('Gross Loss', fmtColorDollar(ov.gross_loss));
+  html += btRow('CAGR', fmtColorPct(ov.cagr));
+  html += btRow('Annual Avg Profit', fmtColorDollar(ov.yearly_avg_profit));
+  html += btRow('Annual Avg Return', fmtColorPct(ov.yearly_avg_return_pct));
+  html += btRow('Monthly Avg Profit', fmtColorDollar(ov.monthly_avg_profit));
+  html += btRow('Daily Avg Profit', fmtColorDollar(ov.daily_avg_profit));
+  html += btRow('Balance DD Max', fmtColor(`${fmtDollar(ov.bal_dd_max)} (${fmtPct(ov.bal_dd_max_pct)})`, false));
+  html += btRow('Equity DD Max', fmtColor(`${fmtDollar(ov.eq_dd_max)} (${fmtPct(ov.eq_dd_max_pct)})`, false));
+  html += btRow('Stagnation Days', fmtInt(ov.stagnation_days));
+  html += btRow('Stagnation %', fmtPct(ov.stagnation_pct));
+  html += btRow('LR Std Error', fmtDollar(ov.lr_stderr));
+  html += '</div>';
+  html += '</div>';
+
+  if (ov.monthly_pnl && Object.keys(ov.monthly_pnl).length > 0) {
+    html += renderMonthlyPnl(ov.monthly_pnl);
+  }
+
+  if (sp.trailing_stop !== undefined) {
+    html += '<div class="bt-risk-section">';
+    html += '<div class="bt-col-title">Risk Management</div>';
+    html += '<div class="bt-risk-tags">';
+    if (sp.trailing_stop) html += '<span class="tag tag-long">Trailing Stop</span>';
+    if (sp.ts_activation) html += '<span class="tag tag-long">TS Activation</span>';
+    if (sp.move_sl_be) html += '<span class="tag tag-long">Move SL to BE</span>';
+    if (sp.profit_target) html += '<span class="tag tag-long">Profit Target</span>';
+    if (sp.has_exit_signals) html += '<span class="tag tag-long">Exit Signals</span>';
+    if (sp.exit_after_bars) html += `<span class="tag tag-breakout">Exit After ${sp.exit_after_bars} bars</span>`;
+    if (sp.order_valid_bars) html += `<span class="tag" style="background:rgba(139,92,246,0.15);color:#c084fc;">Order Valid ${sp.order_valid_bars} bars</span>`;
+    if (sp.time_filter) html += `<span class="tag" style="background:rgba(245,158,11,0.15);color:#fbbf24;">Time: ${sp.time_filter.split(',')[0]}</span>`;
+    html += '</div>';
+    if (sp.indicators && sp.indicators.length) {
+      html += `<div style="margin-top:8px;font-size:12px;color:var(--text-secondary);">Indicators: ${sp.indicators.join(', ')}</div>`;
+    }
+    html += '</div>';
+  }
+
+  if (data.imported_at) {
+    html += `<div style="margin-top:14px;font-size:11px;color:var(--text-muted);text-align:right;">Imported: ${data.imported_at}</div>`;
+  }
+
+  return html;
+}
+
+function renderMonthlyPnl(monthlyPnl) {
+  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const years = Object.keys(monthlyPnl).sort((a,b) => b - a);
+  let html = '<div class="bt-monthly"><div class="bt-col-title">Monthly Performance ($)</div><div class="bt-monthly-scroll"><table class="bt-monthly-table">';
+  html += '<thead><tr><th>YEAR</th>';
+  for (const m of months) html += `<th>${m}</th>`;
+  html += '<th>YTD</th></tr></thead><tbody>';
+  for (const year of years) {
+    const yd = monthlyPnl[year];
+    html += `<tr><td class="bt-monthly-year">${year}</td>`;
+    for (let i = 1; i <= 12; i++) {
+      const val = yd[String(i)];
+      if (val != null && val !== 0) {
+        const cls = val > 0 ? 'green' : 'red';
+        html += `<td class="bt-monthly-cell ${cls}">${Math.round(val)}</td>`;
+      } else {
+        html += '<td class="bt-monthly-cell"></td>';
+      }
+    }
+    const ytd = yd.ytd;
+    if (ytd != null) {
+      const cls = ytd > 0 ? 'green' : 'red';
+      html += `<td class="bt-monthly-ytd ${cls}">${Math.round(ytd)}</td>`;
+    } else {
+      html += '<td class="bt-monthly-ytd"></td>';
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table></div></div>';
+  return html;
+}
+
+function fmtDollar(v) { return v != null ? '$' + Number(v).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2}) : '—'; }
+function fmtNum(v) { return v != null ? Number(v).toFixed(2) : '—'; }
+function fmtPct(v) { return v != null ? Number(v).toFixed(1) + '%' : '—'; }
+function fmtInt(v) { return v != null ? Number(v).toLocaleString() : '—'; }
+function fmtColor(text, positive) { if (text === '—') return text; return `<span class="${positive ? 'green' : 'red'}">${text}</span>`; }
+function fmtColorDollar(v) { return v == null ? '—' : fmtColor(fmtDollar(v), v >= 0); }
+function fmtColorPct(v) { return v == null ? '—' : fmtColor(fmtPct(v), v >= 0); }
+function fmtColorInt(v, positive) { return v == null ? '—' : fmtColor(fmtInt(v), positive); }
+function btMetric(label, value, isPositive) {
+  let cls = 'bt-metric-value';
+  if (isPositive === true) cls += ' green';
+  else if (isPositive === false) cls += ' red';
+  return `<div class="bt-metric"><div class="bt-metric-label">${label}</div><div class="${cls}">${value}</div></div>`;
+}
+function btRow(label, value) {
+  return `<div class="bt-row"><span class="bt-row-label">${label}</span><span class="bt-row-value">${value}</span></div>`;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% set active_page = 'complexity' %}
+{% block title %}Complexity Analysis — Portfolio Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Complexity Analysis</h2>
+  <div class="page-header-actions">
+    <div class="filter-group">
+      <select class="filter-select" onchange="window.location.href='/complexity?account=' + this.value">
+        <option value="all" {{ 'selected' if account_filter == 'all' }}>All Accounts</option>
+        {% for a in accounts %}
+        <option value="{{ a.AccountID }}" {{ 'selected' if account_filter == a.AccountID|string }}>
+          {{ a.AccountName or ('Account ' ~ a.AccountLogin) }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</div>
+
+{% if rows %}
+<div class="data-table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th class="center" data-sort="number">Complexity</th>
+        <th data-sort="string">Account</th>
+        <th class="right" data-sort="number">Strategies</th>
+        <th class="right" data-sort="currency">NET P&L</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set ns = namespace(total_pnl=0) %}
+      {% for r in rows %}
+      {% set ns.total_pnl = ns.total_pnl + r.net_pnl %}
+      <tr>
+        <td class="center mono">{{ r.complexity }}</td>
+        <td class="muted">{{ r.account }}</td>
+        <td class="right mono muted">{{ r.strategy_count }}</td>
+        <td class="right mono {{ 'green' if r.net_pnl > 0 else 'red' if r.net_pnl < 0 else 'muted' }}">
+          ${{ '{:,.2f}'.format(r.net_pnl) }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr style="border-top: 2px solid var(--border);">
+        <td class="center mono" style="font-weight: 600;">Total</td>
+        <td></td>
+        <td class="right mono muted" style="font-weight: 600;">{{ rows|sum(attribute='strategy_count') }}</td>
+        <td class="right mono {{ 'green' if ns.total_pnl > 0 else 'red' if ns.total_pnl < 0 else 'muted' }}" style="font-weight: 600;">
+          ${{ '{:,.2f}'.format(ns.total_pnl) }}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+{% else %}
+<div class="empty-state">
+  <p>No strategies with Complexity data found{{ ' for this account' if account_filter != 'all' else '' }}.</p>
+  <p class="muted">Complexity is imported from SQX metadata when adding strategies via the dashboard export.</p>
+</div>
+{% endif %}
+{% endblock %}

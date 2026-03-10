@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% from "pagination.html" import render_pagination %}
+{% set active_page = 'trades' %}
+{% block title %}Trades — Portfolio Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Trades</h2>
+  <div class="page-header-actions">
+    <button class="btn btn-primary" onclick="openModal('import-trades')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Import Trades
+    </button>
+  </div>
+</div>
+
+<!-- Market & Symbol Filters -->
+{% if market_types %}
+{% set all_markets = ['Commodity', 'Crypto', 'Forex', 'Index'] %}
+<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+  <a href="{{ url_for('trades', symbol='all') }}"
+     class="btn {{ 'btn-primary' if market_filter == 'all' else 'btn-secondary' }}"
+     style="font-size: 0.75rem; padding: 6px 12px;">All</a>
+  {% for m in all_markets %}
+  <a href="{{ url_for('trades', market=m, symbol='all') }}"
+     class="btn {{ 'btn-primary' if market_filter == m else 'btn-secondary' }}"
+     style="font-size: 0.75rem; padding: 6px 12px;">{{ m }}</a>
+  {% endfor %}
+
+  <select id="symbolFilter" class="filter-select" style="min-width: 150px; margin-left: 8px;"
+          onchange="window.location.href='/trades?market={{ market_filter }}&symbol=' + this.value">
+    <option value="all" {{ 'selected' if symbol_filter == 'all' }}>All Symbols</option>
+    {% for sym in symbols %}
+    <option value="{{ sym }}" {{ 'selected' if symbol_filter == sym }}>{{ sym }}</option>
+    {% endfor %}
+  </select>
+
+  <span style="margin-left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700; color: {{ 'var(--profit-green)' if filtered_net_profit >= 0 else 'var(--loss-red)' }};">
+    {{ '+' if filtered_net_profit >= 0 else '' }}${{ '{:,.2f}'.format(filtered_net_profit) }}
+  </span>
+</div>
+{% endif %}
+
+{% if trades %}
+<div class="data-table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th data-sort="number">Ticket</th>
+        <th data-sort="string">Strategy</th>
+        <th data-sort="string">Symbol</th>
+        <th data-sort="string">Type</th>
+        <th class="right" data-sort="number">Lots</th>
+        <th data-sort="date">Open Time</th>
+        <th data-sort="date">Close Time</th>
+        <th class="right" data-sort="currency">Profit</th>
+        <th class="right" data-sort="currency">Net Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in trades %}
+      <tr>
+        <td class="mono muted">{{ t.Ticket }}</td>
+        <td>{{ t.strategy.DisplayName or t.strategy.StrategyName if t.strategy else '—' }}</td>
+        <td class="mono">{{ t.Symbol or '—' }}</td>
+        <td>{{ t.Type or '—' }}</td>
+        <td class="right mono">{{ t.Lots or '—' }}</td>
+        <td class="muted">{{ t.OpenTime or '—' }}</td>
+        <td class="muted">{{ t.CloseTime or '—' }}</td>
+        <td class="right mono {{ 'green' if (t.Profit or 0) >= 0 else 'red' }}">
+          ${{ '{:,.2f}'.format(t.Profit or 0) }}
+        </td>
+        <td class="right mono {{ 'green' if (t.NetProfit or 0) >= 0 else 'red' }}">
+          ${{ '{:,.2f}'.format(t.NetProfit or 0) }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{{ render_pagination(pagination, '&market=' ~ market_filter ~ '&symbol=' ~ symbol_filter) }}
+{% else %}
+<div class="data-table-wrapper">
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    {% if market_filter != 'all' or symbol_filter != 'all' %}
+    <p>No trades match the current filters</p>
+    <div class="hint"><a href="{{ url_for('trades') }}" style="color: var(--accent-green);">Clear filters</a></div>
+    {% else %}
+    <p>No trades imported yet</p>
+    <div class="hint">Click <strong>Import Trades</strong> above to upload a trade CSV</div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Import Trades Modal -->
+<div class="modal-overlay" id="modal-import-trades">
+  <div class="modal" style="max-width: 640px;">
+    <div class="modal-header">
+      <h3>Import Trades</h3>
+      <button class="modal-close" onclick="closeModal('import-trades')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form action="{{ url_for('import_upload') }}" method="POST" enctype="multipart/form-data" id="importForm">
+      <div class="modal-body">
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label>Account</label>
+          <select name="account_id" id="import_account" required>
+            <option value="">— Select Account —</option>
+            {% for a in accounts %}
+            <option value="{{ a.AccountID }}">{{ a.AccountName or a.AccountLogin }}{% if a.AccountLogin %} ({{ a.AccountLogin }}){% endif %}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="file-upload-zone" id="csvDropZone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px;height:36px;margin-bottom:8px;color:var(--accent-green);">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p id="csvFileName">Drop the MT5 trade CSV here</p>
+          <div class="hint" id="csvHint">e.g. trades_51428087.csv from MT5 export service</div>
+          <input type="file" name="csv_file" id="csvFileInput" accept=".csv" required>
+        </div>
+
+        <!-- Preview (shown after file selected) -->
+        <div id="csvPreview" class="hidden" style="margin-top: 14px;">
+          <div style="display:flex; gap:16px; margin-bottom:14px;">
+            <div class="bt-metric" style="flex:1;">
+              <div class="bt-metric-label">Total Trades</div>
+              <div class="bt-metric-value" id="previewTotal">0</div>
+            </div>
+            <div class="bt-metric" style="flex:1;">
+              <div class="bt-metric-label">New Trades</div>
+              <div class="bt-metric-value green" id="previewNew">0</div>
+            </div>
+            <div class="bt-metric" style="flex:1;">
+              <div class="bt-metric-label">Duplicates</div>
+              <div class="bt-metric-value muted" id="previewDups">0</div>
+            </div>
+            <div class="bt-metric" style="flex:1;">
+              <div class="bt-metric-label">Unmatched</div>
+              <div class="bt-metric-value" id="previewUnmatched" style="color:var(--accent-amber);">0</div>
+            </div>
+          </div>
+
+          <div id="previewStrategies" style="margin-bottom: 14px;"></div>
+
+          <div id="previewUnmatchedList" class="hidden" style="margin-bottom:14px; padding:10px 14px; background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.2); border-radius:6px;">
+            <div style="font-weight:600; font-size:12px; color:var(--accent-amber); margin-bottom:6px;">Unmatched Trades (no strategy found)</div>
+            <div id="unmatchedDetails" style="font-size:12px; color:var(--text-secondary);"></div>
+          </div>
+        </div>
+
+        <div style="color: var(--text-muted); font-size: 12px; margin-top: 10px; line-height: 1.6;">
+          Trades are matched by <strong>Magic Number</strong>, with <strong>Comment</strong> as fallback. Duplicates are skipped automatically.
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('import-trades')">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="importBtn" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Import Trades
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  const dropZone = document.getElementById('csvDropZone');
+  const fileInput = document.getElementById('csvFileInput');
+  const importBtn = document.getElementById('importBtn');
+  if (!dropZone || !fileInput) return;
+
+  // Click zone to trigger file select
+  dropZone.addEventListener('click', function(e) {
+    if (e.target !== fileInput) fileInput.click();
+  });
+
+  // File input change
+  fileInput.addEventListener('change', function() {
+    handleCsvFile(this.files[0]);
+  });
+
+  // Drag-and-drop
+  ['dragenter', 'dragover'].forEach(evt => {
+    dropZone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.add('drag-over'); });
+  });
+  ['dragleave', 'drop'].forEach(evt => {
+    dropZone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.remove('drag-over'); });
+  });
+  dropZone.addEventListener('drop', e => {
+    const file = e.dataTransfer.files[0];
+    if (!file || !file.name.endsWith('.csv')) return;
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    fileInput.files = dt.files;
+    handleCsvFile(file);
+  });
+  document.addEventListener('dragover', e => e.preventDefault());
+  document.addEventListener('drop', e => e.preventDefault());
+
+  function handleCsvFile(file) {
+    if (!file) return;
+    dropZone.classList.add('has-file');
+    document.getElementById('csvFileName').textContent = file.name;
+    document.getElementById('csvHint').textContent = (file.size / 1024).toFixed(1) + ' KB';
+    importBtn.disabled = false;
+
+    // Server-side preview
+    const accountId = document.getElementById('import_account').value;
+    const formData = new FormData();
+    formData.append('csv_file', file);
+    formData.append('account_id', accountId || '');
+
+    fetch('/import/preview', { method: 'POST', body: formData })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('previewTotal').textContent = data.total;
+        document.getElementById('previewNew').textContent = data.new_trades;
+        document.getElementById('previewDups').textContent = data.duplicates;
+        document.getElementById('previewUnmatched').textContent = data.unmatched_count;
+
+        let html = '<div style="font-size:12px; color:var(--text-secondary);">';
+        if (data.strategy_breakdown && data.strategy_breakdown.length > 0) {
+          html += '<div style="font-weight:600; margin-bottom:6px; color:var(--text-primary);">Trades by Strategy</div>';
+          data.strategy_breakdown.forEach(s => {
+            const profit = s.net_profit >= 0
+              ? `<span class="green">+$${s.net_profit.toFixed(2)}</span>`
+              : `<span class="red">-$${Math.abs(s.net_profit).toFixed(2)}</span>`;
+            html += `<div style="display:flex; justify-content:space-between; padding:3px 0;">`;
+            html += `<span>${s.name} <span class="muted">(${s.count} trades)</span></span>`;
+            html += `<span class="mono">${profit}</span></div>`;
+          });
+        }
+        html += '</div>';
+        document.getElementById('previewStrategies').innerHTML = html;
+
+        if (data.unmatched && data.unmatched.length > 0) {
+          document.getElementById('previewUnmatchedList').classList.remove('hidden');
+          document.getElementById('unmatchedDetails').innerHTML = data.unmatched
+            .map(u => `Ticket ${u.ticket}: magic=${u.magic}, comment=${u.comment}`)
+            .join('<br>');
+        } else {
+          document.getElementById('previewUnmatchedList').classList.add('hidden');
+        }
+
+        document.getElementById('csvPreview').classList.remove('hidden');
+      });
+  }
+
+  // Re-preview when account changes
+  document.getElementById('import_account').addEventListener('change', function() {
+    if (fileInput.files.length > 0) handleCsvFile(fileInput.files[0]);
+  });
+})();
+</script>
+{% endblock %}

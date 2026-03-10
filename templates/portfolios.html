@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% set active_page = 'portfolios' %}
+{% block title %}Portfolios — Portfolio Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Portfolios</h2>
+  <div class="page-header-actions">
+    <button class="btn btn-primary" onclick="openModal('add-portfolio')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Portfolio
+    </button>
+  </div>
+</div>
+
+{% if portfolio_data %}
+<div class="data-table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th data-sort="string">Portfolio</th>
+        <th data-sort="string">Description</th>
+        <th class="center" data-sort="number">Accounts</th>
+        <th class="center" data-sort="number">Strategies</th>
+        <th class="right" data-sort="currency">Net P&L</th>
+        <th data-sort="date">Created</th>
+        <th class="center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pd in portfolio_data %}
+      {% set p = pd.portfolio %}
+      <tr>
+        <td><strong>{{ p.PortfolioName }}</strong></td>
+        <td class="muted">{{ p.Description or '—' }}</td>
+        <td class="center mono">{{ pd.account_count }}</td>
+        <td class="center mono">{{ pd.strategy_count }}</td>
+        <td class="right mono {{ 'green' if pd.total_pnl >= 0 else 'red' }}">
+          ${{ '{:,.2f}'.format(pd.total_pnl) }}
+        </td>
+        <td class="muted">{{ p.CreatedAt[:10] if p.CreatedAt else '—' }}</td>
+        <td class="center">
+          <div class="action-btns">
+            <button class="action-btn blue" onclick="openEditPortfolio({{ p.PortfolioID }}, '{{ p.PortfolioName }}', '{{ p.Description or '' }}')">Edit</button>
+            <button class="action-btn red" onclick="confirmDelete('delete-portfolio-{{ p.PortfolioID }}', '{{ p.PortfolioName }}')">Delete</button>
+            <form id="delete-portfolio-{{ p.PortfolioID }}" action="{{ url_for('delete_portfolio', portfolio_id=p.PortfolioID) }}" method="POST" style="display:none;"></form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="data-table-wrapper">
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+    <p>No portfolios yet</p>
+    <div class="hint">Create a portfolio to group your trading accounts</div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Add Portfolio Modal -->
+<div class="modal-overlay" id="modal-add-portfolio">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add Portfolio</h3>
+      <button class="modal-close" onclick="closeModal('add-portfolio')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form action="{{ url_for('add_portfolio') }}" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Portfolio Name</label>
+          <input type="text" name="portfolio_name" placeholder="e.g. NAS100 Strategies" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" placeholder="Optional description of this portfolio's focus"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('add-portfolio')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Portfolio</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Portfolio Modal -->
+<div class="modal-overlay" id="modal-edit-portfolio">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Edit Portfolio</h3>
+      <button class="modal-close" onclick="closeModal('edit-portfolio')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form id="editPortfolioForm" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Portfolio Name</label>
+          <input type="text" name="portfolio_name" id="edit_portfolio_name" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" id="edit_portfolio_desc"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('edit-portfolio')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function openEditPortfolio(id, name, desc) {
+  document.getElementById('editPortfolioForm').action = `/portfolios/${id}/edit`;
+  document.getElementById('edit_portfolio_name').value = name;
+  document.getElementById('edit_portfolio_desc').value = desc;
+  openModal('edit-portfolio');
+}
+</script>
+{% endblock %}

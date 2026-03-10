@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% from "pagination.html" import render_pagination %}
+{% set active_page = 'margins' %}
+{% block title %}Margins — Portfolio Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h2>Margins</h2>
+    <p class="page-subtitle">Margin requirements per instrument (from MT5 MarginExport.csv)</p>
+  </div>
+  <div style="display: flex; gap: 10px;">
+    <button class="btn btn-primary" onclick="openModal('margin-import')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Import Margin CSV
+    </button>
+  </div>
+</div>
+
+<!-- Summary Bar -->
+<div style="display: flex; gap: 24px; align-items: center; margin-bottom: 16px; padding: 10px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; flex-wrap: wrap;">
+  <div>
+    <span style="color: var(--text-muted); margin-right: 6px;">Instruments</span>
+    <span style="font-weight: 700; font-family: 'JetBrains Mono', monospace;">{{ total_instruments }}</span>
+  </div>
+  <div style="color: var(--border);">|</div>
+  <div>
+    <span style="color: var(--text-muted); margin-right: 6px;">Account Leverage</span>
+    <span style="font-weight: 700; font-family: 'JetBrains Mono', monospace;">1:{{ instruments[0].AccountLeverage if instruments else '—' }}</span>
+  </div>
+  <div style="color: var(--border);">|</div>
+  <div>
+    <span style="color: var(--text-muted); margin-right: 6px;">Active Strategy Margin</span>
+    <span style="font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--accent-amber);">${{ '%.2f'|format(total_active_margin) }}</span>
+  </div>
+  <div style="color: var(--border);">|</div>
+  <div>
+    <span style="color: var(--text-muted); margin-right: 6px;">Last Import</span>
+    <span style="font-weight: 600; font-family: 'JetBrains Mono', monospace;">{{ last_import or '—' }}</span>
+  </div>
+</div>
+
+<!-- Filter & Search Controls -->
+{% if instruments %}
+<div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+  <!-- Type Filter -->
+  <div style="display: flex; gap: 8px; align-items: center;">
+    <a href="{{ url_for('margins', search=search) }}"
+       class="btn {{ 'btn-primary' if type_filter == 'all' else 'btn-secondary' }}"
+       style="font-size: 0.75rem; padding: 6px 12px;">All</a>
+    {% for t in types %}
+    <a href="{{ url_for('margins', type=t, search=search) }}"
+       class="btn {{ 'btn-primary' if type_filter == t else 'btn-secondary' }}"
+       style="font-size: 0.75rem; padding: 6px 12px;">{{ t }}</a>
+    {% endfor %}
+  </div>
+
+  <div style="flex: 1;"></div>
+
+  <!-- Search -->
+  <form method="GET" action="{{ url_for('margins') }}" style="display: flex; gap: 6px;">
+    <input type="hidden" name="type" value="{{ type_filter }}">
+    <input type="text" name="search" value="{{ search }}" placeholder="Search symbol..."
+           class="form-input" style="width: 160px; padding: 6px 10px; font-size: 0.8rem;">
+    {% if search %}
+    <a href="{{ url_for('margins', type=type_filter) }}" class="btn btn-secondary"
+       style="font-size: 0.75rem; padding: 6px 10px;">✕</a>
+    {% endif %}
+  </form>
+</div>
+{% endif %}
+
+<!-- Data Grid -->
+{% if instruments %}
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th data-sort="string">Symbol</th>
+        <th data-sort="string">Type</th>
+        <th data-sort="number">Bid</th>
+        <th data-sort="number">Ask</th>
+        <th data-sort="number">Spread (pts)</th>
+        <th data-sort="number">Contract Size</th>
+        <th data-sort="number">Min Lot</th>
+        <th data-sort="currency">Margin ({{ instruments[0].AccountCurrency if instruments else 'AUD' }})</th>
+        <th data-sort="string">Margin CCY</th>
+        <th data-sort="currency">Tick Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for inst in instruments %}
+      <tr{% if inst.SymbolClean and inst.SymbolClean.upper() in active_symbols %} style="background: rgba(59,130,246,0.08);"{% endif %}>
+        <td style="width: 28px; text-align: center;">
+          {% if inst.SymbolClean and inst.SymbolClean.upper() in active_symbols %}
+          <span title="Active strategy" style="color: var(--accent-blue); font-size: 0.7rem;">●</span>
+          {% endif %}
+        </td>
+        <td>
+          <span style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+            {{ inst.SymbolClean }}
+          </span>
+          {% if inst.Symbol != inst.SymbolClean %}
+          <span style="color: var(--text-muted); font-size: 0.7rem; margin-left: 4px;">{{ inst.Symbol }}</span>
+          {% endif %}
+        </td>
+        <td>
+          <span class="tag
+            {%- if inst.Type == 'Forex' %} tag-trend
+            {%- elif inst.Type == 'Index' %} tag-breakout
+            {%- elif inst.Type == 'Commodity' %} tag-mr
+            {%- elif inst.Type == 'Crypto' %} tag-both
+            {%- else %} tag-trend{% endif %}">
+            {{ inst.Type }}
+          </span>
+        </td>
+        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">{{ inst.Bid }}</td>
+        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">{{ inst.Ask }}</td>
+        <td style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">{{ inst.SpreadPoints }}</td>
+        <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">{{ '{:,.0f}'.format(inst.ContractSize) }}</td>
+        <td style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">{{ inst.MinLot }}</td>
+        <td style="text-align: right; font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+          {%- if inst.MarginRequired == 0 %} color: var(--text-muted);{% else %} color: var(--accent-amber);{% endif %}">
+          {% if inst.MarginRequired > 0 %}${{ '%.2f'|format(inst.MarginRequired) }}{% else %}—{% endif %}
+        </td>
+        <td style="font-size: 0.75rem; color: var(--text-secondary); text-align: center;">{{ inst.MarginCurrency }}</td>
+        <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-secondary);">
+          {% if inst.TickValue > 0 %}${{ '%.2f'|format(inst.TickValue) }}{% else %}—{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{{ render_pagination(pagination, extra_params='&type=' ~ type_filter ~ ('&search=' ~ search if search else '')) }}
+{% else %}
+<div class="empty-state">
+  <p>No margin data imported yet.</p>
+  <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">
+    Run the <code style="color: var(--accent-cyan);">MarginExport.mq5</code> script in MetaTrader 5, then click
+    <strong>Import Margin CSV</strong> above to upload the file.
+  </p>
+</div>
+{% endif %}
+
+<!-- Import Modal -->
+<div class="modal-overlay" id="modal-margin-import">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Import Margin Data</h3>
+      <button class="modal-close" onclick="closeModal('margin-import')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <form action="{{ url_for('margins_import') }}" method="POST" enctype="multipart/form-data" id="marginImportForm">
+      <div class="modal-body">
+        <div class="file-upload-zone" id="marginDropZone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <p id="marginFileName">Drop the MarginExport.csv file here</p>
+          <div class="hint">Generated by MarginExport.mq5 in MQL5/Files/</div>
+          <input type="file" name="margin_csv" id="marginFileInput" accept=".csv" required>
+        </div>
+
+        <!-- Preview info (shown after file selected) -->
+        <div id="marginPreview" class="hidden" style="margin-top: 12px;">
+          <div style="background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 12px;">
+            <div style="display: flex; gap: 24px; font-size: 0.85rem;">
+              <div>
+                <span style="color: var(--text-muted);">File:</span>
+                <span id="marginPreviewName" style="color: var(--text-primary);"></span>
+              </div>
+              <div>
+                <span style="color: var(--text-muted);">Size:</span>
+                <span id="marginPreviewSize" style="color: var(--text-primary);"></span>
+              </div>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 8px;">
+            {% if total_instruments > 0 %}
+            This will replace the existing {{ total_instruments }} instruments with the new data.
+            {% else %}
+            Margin data will be imported for all symbols in your Market Watch.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('margin-import')">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="marginImportBtn" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Import
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+  const dropZone = document.getElementById('marginDropZone');
+  const fileInput = document.getElementById('marginFileInput');
+  const preview = document.getElementById('marginPreview');
+  const importBtn = document.getElementById('marginImportBtn');
+
+  if (!dropZone || !fileInput) return;
+
+  // File selection handler
+  fileInput.addEventListener('change', function() {
+    handleMarginFile(this.files[0]);
+  });
+
+  // Drag-and-drop handlers
+  dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+  });
+
+  dropZone.addEventListener('dragleave', function() {
+    dropZone.classList.remove('drag-over');
+  });
+
+  dropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      const dt = new DataTransfer();
+      dt.items.add(files[0]);
+      fileInput.files = dt.files;
+      handleMarginFile(files[0]);
+    }
+  });
+
+  function handleMarginFile(file) {
+    if (!file) return;
+
+    if (!file.name.endsWith('.csv')) {
+      alert('Please select a CSV file.');
+      return;
+    }
+
+    // Update drop zone appearance
+    dropZone.classList.add('has-file');
+    document.getElementById('marginFileName').textContent = file.name;
+
+    // Show preview
+    document.getElementById('marginPreviewName').textContent = file.name;
+    const sizeKB = (file.size / 1024).toFixed(1);
+    document.getElementById('marginPreviewSize').textContent = sizeKB + ' KB';
+    preview.classList.remove('hidden');
+
+    // Enable import button
+    importBtn.disabled = false;
+  }
+})();
+</script>
+{% endblock %}
